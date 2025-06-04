@@ -124,7 +124,7 @@ export const translations = {
             description: "Perfect for small businesses and solo entrepreneurs just starting out.",
             features: [
               "1 administrator account with overview of all booked appointments",
-              "Email notifications to client that appointment is confirmed",
+              "E-mail notifications to client that appointment is confirmed",
               "Basic calendar integration",
               "Limited application customization options",
               "DreaminApp expert team support via email"
@@ -137,7 +137,7 @@ export const translations = {
             features: [
               "Up to 5 administrator accounts with separate calendars and separate appointments or separate locations of the same company",
               "Basic calendar integration",
-              "Email notifications + SMS notifications to client that appointment is confirmed",
+              "E-mail notifications + SMS notifications to client that appointment is confirmed",
               "Customizable branding (your logo, colors, service visuals)",
               "DreaminApp expert team support via email"
             ]
@@ -150,7 +150,7 @@ export const translations = {
               "Unlimited administrator accounts with separate calendars and separate appointments or separate locations of the same company",
               "Advanced analytics and reports (Appointment cancellation limit, Client reputation with special client marking within the application)",
               "White-label solution (removal of EasyBook branding, complete your branding)",
-              "Email notifications + SMS notifications to client that appointment is confirmed",
+              "E-mail notifications + SMS notifications to client that appointment is confirmed",
               "Payment integrations through the application: Stripe, Zapier, Google Calendar integration",
               "Priority DreaminApp expert team support (chat or direct contact)"
             ]
@@ -325,7 +325,7 @@ export const translations = {
             description: "Savršeno za mala preduzeća i preduzetnike koji tek počinju.",
             features: [
               "1 administrator nalog sa pregledom svih rezervisanih termina",
-              "E-mail notifikacije klijentu da je termin potvrđen",
+              "E-mail notifikacije klijentu da je termin rezervisan",
               "Osnovna integracija kalendara",
               "Ograničene opcije prilagođavanja aplikacije",
               "Podrška DreaminApp stručnog tima putem e-pošte"
@@ -338,7 +338,7 @@ export const translations = {
             features: [
               "do 5 administrator naloga sa posebnim kalendarima i posebnim terminima ili posebnim lokacijama istog preduzeća",
               "Osnovna integracija kalendara",
-              "E-mail notifikacije + SMS notifikacije klijentu da je termin potvrđen",
+              "E-mail notifikacije + SMS notifikacije klijentu da je termin rezervisan",
               "Prilagodljiv brending (vaš logo, boje, vizuali usluga)",
               "Podrška DreaminApp stručnog tima putem e-pošte"
             ]
@@ -351,7 +351,7 @@ export const translations = {
               "Neograničen broj administrator naloga sa posebnim kalendarima i posebnim terminima ili posebnim lokacijama istog preduzeća",
               "Napredna analitika i izveštaji (Ograničenje broja otkazivanja termina, Reputacija klijenta sa označavanjem specijalnih klijenata unutar aplikacije)",
               "White-label rešenje (uklanjanje EasyBook brenda, kompletno vaše brendiranje)",
-              "E-mail notifikacije + SMS notifikacije klijentu da je termin potvrđen",
+              "E-mail notifikacije + SMS notifikacije klijentu da je termin rezervisan",
               "Integracije za plaćanje usluge putem aplikacije: Stripe, Zapier, Google Calendar integracija",
               "Prioritetna podrška DreaminApp stručnog tima (chat ili direktan kontakt)"
             ]

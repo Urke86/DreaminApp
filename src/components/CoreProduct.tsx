@@ -4,19 +4,22 @@ import { useInView } from 'react-intersection-observer';
 import { Calendar, Clock, Users, Star, Code, Building2, ExternalLink } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import { translations } from '../translations';
+import PricingModal from './PricingModal';
 
 const PricingCard = ({ 
   tier, 
   price, 
   description, 
   features, 
-  highlighted = false 
+  highlighted = false,
+  onSelect
 }: { 
   tier: string; 
   price: string; 
   description: string; 
   features: string[]; 
-  highlighted?: boolean; 
+  highlighted?: boolean;
+  onSelect: () => void;
 }) => {
   const [ref, inView] = useInView({
     triggerOnce: true,
@@ -60,7 +63,10 @@ const PricingCard = ({
         </ul>
       </div>
       <div className="mt-6">
-        <button className={`w-full btn ${highlighted ? 'btn-primary' : 'btn-secondary'}`}>
+        <button 
+          onClick={onSelect}
+          className={`w-full btn ${highlighted ? 'btn-primary' : 'btn-secondary'}`}
+        >
           {language === 'en' ? 'Choose Plan' : 'Izaberi Plan'}
         </button>
       </div>
@@ -128,10 +134,17 @@ const IntegrationOption = ({
   );
 };
 
-const CoreProduct = () => {
+const CoreProduct: React.FC = () => {
   const { language } = useLanguage();
   const t = translations[language].coreProduct;
-  
+  const [selectedPlan, setSelectedPlan] = useState<{ tier: string; price: string } | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handlePlanSelect = (plan: { tier: string; price: string }) => {
+    setSelectedPlan(plan);
+    setIsModalOpen(true);
+  };
+
   const [ref, inView] = useInView({
     triggerOnce: true,
     threshold: 0.1,
@@ -143,11 +156,11 @@ const CoreProduct = () => {
   });
 
   return (
-    <section id="core-product" className="section relative overflow-hidden">
+    <section id="core-product" className="section relative overflow-hidden py-20 bg-gray-50">
       <div className="absolute top-0 right-0 w-1/3 h-1/3 bg-gradient-to-bl from-primary-100 to-transparent rounded-bl-full -z-10" />
       <div className="absolute bottom-0 left-0 w-1/3 h-1/3 bg-gradient-to-tr from-secondary-100 to-transparent rounded-tr-full -z-10" />
       
-      <div className="container">
+      <div className="container mx-auto px-4">
         <motion.div
           ref={ref}
           initial={{ opacity: 0, y: 20 }}
@@ -245,21 +258,32 @@ const CoreProduct = () => {
           </div>
         </div>
         
-        <h3 className="text-2xl font-bold text-center mb-12">{t.pricing.title}</h3>
-        
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-6">
+        <div className="text-center mb-12">
+          <h2 className="text-3xl font-bold mb-4">{t.pricing.title}</h2>
+        </div>
+
+        <div className="grid md:grid-cols-3 gap-8">
           {t.pricing.plans.map((plan, index) => (
             <PricingCard
-              key={index}
+              key={plan.tier}
               tier={plan.tier}
               price={plan.price}
               description={plan.description}
               features={plan.features}
               highlighted={index === 1}
+              onSelect={() => handlePlanSelect({ tier: plan.tier, price: plan.price })}
             />
           ))}
         </div>
       </div>
+
+      {selectedPlan && (
+        <PricingModal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          selectedPlan={selectedPlan}
+        />
+      )}
     </section>
   );
 };
