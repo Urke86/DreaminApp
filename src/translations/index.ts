@@ -175,7 +175,7 @@ export const translations = {
           quote: "The e-commerce platform they built for us increased our online sales by 200% in just three months. Their attention to detail is outstanding.",
           author: "Michael Chen",
           position: "Founder, Artisan Goods",
-          image: "https://images.pexels.com/photos/614810/pexels-photo-614810.jpeg"
+          image: "https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg"
         },
         {
           quote: "DreaminApp transformed our scheduling process. We've reduced admin work by 75% and our clients love how easy it is to book appointments.",
@@ -376,7 +376,7 @@ export const translations = {
           quote: "E-commerce platforma koju su izgradili za nas povećala je našu online prodaju za 200% u samo tri meseca. Njihova pažnja prema detaljima je izvanredna.",
           author: "Mihailo Čen",
           position: "Osnivač, Artisan Goods",
-          image: "https://images.pexels.com/photos/614810/pexels-photo-614810.jpeg"
+          image: "https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg"
         },
         {
           quote: "DreaminApp je transformisala naš proces zakazivanja. Smanjili smo administrativni posao za 75%, a naši klijenti obožavaju koliko je lako zakazati termin.",
