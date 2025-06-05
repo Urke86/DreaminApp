@@ -26,6 +26,18 @@ const PricingModal: React.FC<PricingModalProps> = ({ isOpen, onClose, selectedPl
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    // Check if all required fields are filled
+    const requiredFields = ['companyName', 'businessType', 'fullName', 'phone', 'email'];
+    const emptyFields = requiredFields.filter(field => !formData[field as keyof typeof formData]);
+    
+    if (emptyFields.length > 0) {
+      const message = language === 'en' 
+        ? 'Please fill in all required fields.'
+        : 'Molimo popunite sva obavezna polja.';
+      alert(message);
+      return;
+    }
     
     try {
       const response = await fetch('/api/send-pricing-form', {
@@ -85,7 +97,7 @@ const PricingModal: React.FC<PricingModalProps> = ({ isOpen, onClose, selectedPl
                   </p>
                 </div>
 
-                <form onSubmit={handleSubmit} className="space-y-4 flex-1 flex flex-col justify-between" noValidate>
+                <form onSubmit={handleSubmit} className="space-y-4 flex-1 flex flex-col justify-between">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">
                       {language === 'en' ? 'Company Name' : 'Ime vaše kompanije'} *
@@ -97,7 +109,6 @@ const PricingModal: React.FC<PricingModalProps> = ({ isOpen, onClose, selectedPl
                       value={formData.companyName}
                       onChange={handleChange}
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
-                      title={language === 'en' ? 'Please fill out this field' : 'Molimo popunite ovo polje'}
                     />
                   </div>
 
@@ -112,7 +123,6 @@ const PricingModal: React.FC<PricingModalProps> = ({ isOpen, onClose, selectedPl
                       value={formData.businessType}
                       onChange={handleChange}
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
-                      title={language === 'en' ? 'Please fill out this field' : 'Molimo popunite ovo polje'}
                     />
                   </div>
 
@@ -127,7 +137,6 @@ const PricingModal: React.FC<PricingModalProps> = ({ isOpen, onClose, selectedPl
                       value={formData.fullName}
                       onChange={handleChange}
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
-                      title={language === 'en' ? 'Please fill out this field' : 'Molimo popunite ovo polje'}
                     />
                   </div>
 
@@ -142,7 +151,6 @@ const PricingModal: React.FC<PricingModalProps> = ({ isOpen, onClose, selectedPl
                       value={formData.phone}
                       onChange={handleChange}
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
-                      title={language === 'en' ? 'Please fill out this field' : 'Molimo popunite ovo polje'}
                     />
                   </div>
 
@@ -157,7 +165,6 @@ const PricingModal: React.FC<PricingModalProps> = ({ isOpen, onClose, selectedPl
                       value={formData.email}
                       onChange={handleChange}
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
-                      title={language === 'en' ? 'Please fill out this field' : 'Molimo popunite ovo polje'}
                     />
                   </div>
 
