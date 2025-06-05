@@ -70,7 +70,7 @@ export const translations = {
         },
         {
           title: "Financial Services Website",
-          category: "Websites",
+          category: "Web Sajtovi",
           image: "https://images.pexels.com/photos/6801648/pexels-photo-6801648.jpeg",
           description: "Corporate website with secure client portal and interactive tools.",
         },
@@ -186,8 +186,8 @@ export const translations = {
       ]
     },
     contact: {
-      title: "Get In Touch",
-      subtitle: "Ready to discuss your project? Reach out to us and let's create something amazing together.",
+      title: "Contact Us",
+      subtitle: "Always available online - we're here for your questions!",
       form: {
         name: "Your Name",
         email: "Your Email",
@@ -388,7 +388,7 @@ export const translations = {
     },
     contact: {
       title: "Kontaktirajte Nas",
-      subtitle: "Spremni ste da razgovarate o vašem projektu? Javite nam se i zajedno ćemo stvoriti nešto izuzetno.",
+      subtitle: "Uvek dostupni online – tu smo za vaša pitanja!",
       form: {
         name: "Vaše Ime",
         email: "Vaš Email",
