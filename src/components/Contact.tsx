@@ -31,13 +31,13 @@ const SuccessModal = ({ isOpen, onClose, language }: { isOpen: boolean; onClose:
           </div>
           
           <h3 className="text-xl font-bold mb-2">
-            {language === 'en' ? 'Message Sent Successfully!' : 'Poruka Uspešno Poslata!'}
+            {language === 'en' ? 'Message Sent Successfully!' : 'Poruka je poslata našoj podršci!'}
           </h3>
           
           <p className="text-gray-600">
             {language === 'en' 
-              ? 'We will respond to your message within 24 hours.'
-              : 'Odgovorićemo na vašu poruku u roku od 24 sata.'}
+              ? 'We will contact you soon.'
+              : 'Uskoro ćemo vas kontaktirati.'}
           </p>
         </div>
       </motion.div>
@@ -64,6 +64,9 @@ const Contact = () => {
     threshold: 0.1,
   });
 
+  const [validationMessage, setValidationMessage] = useState('');
+  const [firstInvalidField, setFirstInvalidField] = useState<string | null>(null);
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({
@@ -76,15 +79,33 @@ const Contact = () => {
     e.preventDefault();
     setIsSubmitting(true);
 
+    // Custom validacija
+    const fields = [
+      { name: 'name', value: formData.name },
+      { name: 'email', value: formData.email },
+      { name: 'subject', value: formData.subject },
+      { name: 'message', value: formData.message },
+    ];
+    const firstEmpty = fields.find(f => !f.value);
+    if (firstEmpty) {
+      setFirstInvalidField(firstEmpty.name);
+      setValidationMessage(language === 'en' ? 'This field is required.' : 'Ovo polje je obavezno.');
+      setIsSubmitting(false);
+      return;
+    } else {
+      setFirstInvalidField(null);
+      setValidationMessage('');
+    }
+
     try {
-      const response = await fetch('/api/send-email', {
+      const response = await fetch('/.netlify/functions/send-contact-form', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          from: formData.email,
           name: formData.name,
+          email: formData.email,
           subject: formData.subject,
           message: formData.message,
         }),
@@ -104,6 +125,10 @@ const Contact = () => {
       setShowModal(true);
     } catch (error) {
       console.error('Failed to send email:', error);
+      setValidationMessage(language === 'en'
+        ? 'An error occurred. Please try again.'
+        : 'Došlo je do greške. Molimo pokušajte ponovo.');
+      setTimeout(() => setValidationMessage(''), 3000);
     } finally {
       setIsSubmitting(false);
     }
@@ -210,11 +235,13 @@ const Contact = () => {
                     type="text"
                     id="name"
                     name="name"
-                    required
                     value={formData.name}
                     onChange={handleChange}
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
                   />
+                  {firstInvalidField === 'name' && validationMessage && (
+                    <div className="text-red-600 text-sm mt-1">{validationMessage}</div>
+                  )}
                 </div>
                 <div>
                   <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
@@ -224,11 +251,13 @@ const Contact = () => {
                     type="email"
                     id="email"
                     name="email"
-                    required
                     value={formData.email}
                     onChange={handleChange}
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
                   />
+                  {firstInvalidField === 'email' && validationMessage && (
+                    <div className="text-red-600 text-sm mt-1">{validationMessage}</div>
+                  )}
                 </div>
               </div>
               
@@ -239,7 +268,6 @@ const Contact = () => {
                 <select
                   id="subject"
                   name="subject"
-                  required
                   value={formData.subject}
                   onChange={handleChange}
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
@@ -251,6 +279,9 @@ const Contact = () => {
                   <option value="Branding">{language === 'en' ? 'Branding' : 'Brending'}</option>
                   <option value="Other">{language === 'en' ? 'Other' : 'Drugo'}</option>
                 </select>
+                {firstInvalidField === 'subject' && validationMessage && (
+                  <div className="text-red-600 text-sm mt-1">{validationMessage}</div>
+                )}
               </div>
               
               <div className="mb-6">
@@ -260,12 +291,14 @@ const Contact = () => {
                 <textarea
                   id="message"
                   name="message"
-                  required
                   rows={5}
                   value={formData.message}
                   onChange={handleChange}
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
                 ></textarea>
+                {firstInvalidField === 'message' && validationMessage && (
+                  <div className="text-red-600 text-sm mt-1">{validationMessage}</div>
+                )}
               </div>
               
               <button
