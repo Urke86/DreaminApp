@@ -41,7 +41,7 @@ const PricingModal: React.FC<PricingModalProps> = ({ isOpen, onClose, selectedPl
     }
     
     try {
-      const response = await fetch('/api/send-pricing-form', {
+      const response = await fetch('/.netlify/functions/send-pricing-form', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -56,7 +56,7 @@ const PricingModal: React.FC<PricingModalProps> = ({ isOpen, onClose, selectedPl
       if (response.ok) {
         setStep(2);
       } else {
-        alert(language === 'en' ? 'An error occurred. Please try again.' : 'Došlo je do greške. Molimo pokušajte ponovo.');
+        throw new Error('Failed to send form');
       }
     } catch (error) {
       console.error('Error:', error);
@@ -185,7 +185,6 @@ const PricingModal: React.FC<PricingModalProps> = ({ isOpen, onClose, selectedPl
                     <button
                       type="submit"
                       className="w-32 px-6 py-2 rounded-md bg-blue-600 text-white font-bold hover:bg-blue-700 transition-colors duration-200 shadow-sm"
-                      style={{ fontSize: 18, overflow: 'visible', whiteSpace: 'nowrap', zIndex: 1000, position: 'relative' }}
                     >
                       {language === 'en' ? 'Continue' : 'Nastavi'}
                     </button>
@@ -196,13 +195,13 @@ const PricingModal: React.FC<PricingModalProps> = ({ isOpen, onClose, selectedPl
               <div className="text-center">
                 <h2 className="text-2xl font-bold mb-4">
                   {language === 'en' 
-                    ? 'Thank you for choosing EasyBook application and choosing us as your partner.'
-                    : 'Hvala što ste izabrali EasyBook aplikaciju i što ste odabrali nas za partnera.'}
+                    ? 'Thank you for your interest in our EasyBook application.'
+                    : 'Hvala na interesovanju za našu EasyBook aplikaciju.'}
                 </h2>
                 <p className="text-gray-600 mb-6">
                   {language === 'en'
-                    ? 'An agent from DreaminApp company will contact you soon.'
-                    : 'Uskoro će vam se javiti agent iz DreaminApp kompanije.'}
+                    ? 'An agent from DreaminApp will contact you soon.'
+                    : 'Naš agent će vas uskoro kontaktirati.'}
                 </p>
                 <button
                   onClick={onClose}
