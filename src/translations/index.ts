@@ -203,7 +203,7 @@ export const translations = {
   sr: {
     hero: {
       title: "Moderna Digitalna Rešenja Za Vaše Poslovanje",
-      subtitle: "Kreiramo digitalna rešenja koja ostavljaju snažan vizuelni utisak i koja podstiču rast i transformišu poslovanje.",
+      subtitle: "Dizajniramo web sajtove koji ostavljaju snažan vizuelni utisak, razvijamo moćne aplikacije i pružamo digitalna iskustva koja podstiču rast i transformišu poslovanje.",
       exploreServices: "Istražite Naše Usluge",
       schedulingSolution: "Rešenje za Zakazivanje",
     },
