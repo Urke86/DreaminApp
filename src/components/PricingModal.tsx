@@ -33,7 +33,7 @@ const PricingModal: React.FC<PricingModalProps> = ({ isOpen, onClose, selectedPl
     
     if (emptyFields.length > 0) {
       const message = language === 'en' 
-        ? 'Please fill in all required fields.'
+        ? 'Please fill in all required fields before continuing.'
         : 'Molimo popunite sva obavezna polja.';
       alert(message);
       return;
