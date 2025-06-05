@@ -49,7 +49,7 @@ const PricingModal: React.FC<PricingModalProps> = ({ isOpen, onClose, selectedPl
     }
 
     try {
-      const response = await fetch('/api/send-pricing-form', {
+      const response = await fetch('/.netlify/functions/send-pricing-form', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
