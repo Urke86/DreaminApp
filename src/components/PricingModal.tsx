@@ -23,16 +23,33 @@ const PricingModal: React.FC<PricingModalProps> = ({ isOpen, onClose, selectedPl
     phone: '',
     email: '',
   });
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [error, setError] = useState('');
+  const [validationMessage, setValidationMessage] = useState('');
+  const [firstInvalidField, setFirstInvalidField] = useState<string | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsSubmitting(true);
-    setError('');
+
+    const fields = [
+      { name: 'companyName', value: formData.companyName },
+      { name: 'businessType', value: formData.businessType },
+      { name: 'fullName', value: formData.fullName },
+      { name: 'phone', value: formData.phone },
+      { name: 'email', value: formData.email },
+    ];
+    const firstEmpty = fields.find(f => !f.value);
+    if (firstEmpty) {
+      setFirstInvalidField(firstEmpty.name);
+      setValidationMessage(language === 'en'
+        ? 'This field is required.'
+        : 'Ovo polje je obavezno.');
+      return;
+    } else {
+      setFirstInvalidField(null);
+      setValidationMessage('');
+    }
 
     try {
-      const response = await fetch('/.netlify/functions/send-pricing-form', {
+      const response = await fetch('/api/send-pricing-form', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -44,21 +61,20 @@ const PricingModal: React.FC<PricingModalProps> = ({ isOpen, onClose, selectedPl
         }),
       });
 
-      if (!response.ok) {
-        throw new Error('Failed to send form');
-      }
-
-      const data = await response.json();
-      
-      if (data.success) {
+      if (response.ok) {
         setStep(2);
       } else {
-        throw new Error(data.error || 'Failed to send form');
+        setValidationMessage(language === 'en'
+          ? 'An error occurred. Please try again.'
+          : 'Došlo je do greške. Molimo pokušajte ponovo.');
+        setTimeout(() => setValidationMessage(''), 3000);
       }
     } catch (error) {
-      setError(language === 'en' ? 'An error occurred. Please try again.' : 'Došlo je do greške. Molimo pokušajte ponovo.');
-    } finally {
-      setIsSubmitting(false);
+      console.error('Error:', error);
+      setValidationMessage(language === 'en'
+        ? 'An error occurred. Please try again.'
+        : 'Došlo je do greške. Molimo pokušajte ponovo.');
+      setTimeout(() => setValidationMessage(''), 3000);
     }
   };
 
@@ -96,81 +112,85 @@ const PricingModal: React.FC<PricingModalProps> = ({ isOpen, onClose, selectedPl
                   </p>
                 </div>
 
-                {error && (
-                  <div className="mb-4 p-3 bg-red-100 text-red-700 rounded-md">
-                    {error}
-                  </div>
-                )}
-
                 <form onSubmit={handleSubmit} className="space-y-4">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">
-                      {language === 'en' ? 'Company Name' : 'Ime vaše kompanije'} *
+                      {language === 'en' ? 'Company Name' : 'Ime vaše kompanije'}
                     </label>
                     <input
                       type="text"
                       name="companyName"
-                      required
                       value={formData.companyName}
                       onChange={handleChange}
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
                     />
+                    {firstInvalidField === 'companyName' && validationMessage && (
+                      <div className="text-red-600 text-sm mt-1">{validationMessage}</div>
+                    )}
                   </div>
 
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">
-                      {language === 'en' ? 'Business Type' : 'Delatnost kojom se bavite'} *
+                      {language === 'en' ? 'Business Type' : 'Delatnost kojom se bavite'}
                     </label>
                     <input
                       type="text"
                       name="businessType"
-                      required
                       value={formData.businessType}
                       onChange={handleChange}
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
                     />
+                    {firstInvalidField === 'businessType' && validationMessage && (
+                      <div className="text-red-600 text-sm mt-1">{validationMessage}</div>
+                    )}
                   </div>
 
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">
-                      {language === 'en' ? 'Full Name' : 'Ime i Prezime'} *
+                      {language === 'en' ? 'Full Name' : 'Ime i Prezime'}
                     </label>
                     <input
                       type="text"
                       name="fullName"
-                      required
                       value={formData.fullName}
                       onChange={handleChange}
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
                     />
+                    {firstInvalidField === 'fullName' && validationMessage && (
+                      <div className="text-red-600 text-sm mt-1">{validationMessage}</div>
+                    )}
                   </div>
 
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">
-                      {language === 'en' ? 'Phone Number' : 'Kontakt telefon'} *
+                      {language === 'en' ? 'Phone Number' : 'Kontakt telefon'}
                     </label>
                     <input
                       type="tel"
                       name="phone"
-                      required
                       value={formData.phone}
                       onChange={handleChange}
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
                     />
+                    {firstInvalidField === 'phone' && validationMessage && (
+                      <div className="text-red-600 text-sm mt-1">{validationMessage}</div>
+                    )}
                   </div>
 
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">
-                      {language === 'en' ? 'Email' : 'Kontakt mail'} *
+                      {language === 'en' ? 'Email' : 'Kontakt mail'}
                     </label>
                     <input
                       type="email"
                       name="email"
-                      required
                       value={formData.email}
                       onChange={handleChange}
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
                     />
+                    {firstInvalidField === 'email' && validationMessage && (
+                      <div className="text-red-600 text-sm mt-1">{validationMessage}</div>
+                    )}
                   </div>
 
                   <div className="flex justify-between items-center mt-6 pt-4 border-t border-gray-100">
@@ -183,14 +203,9 @@ const PricingModal: React.FC<PricingModalProps> = ({ isOpen, onClose, selectedPl
                     </button>
                     <button
                       type="submit"
-                      disabled={isSubmitting}
                       className="px-6 py-2 rounded-md bg-primary-600 text-white font-medium hover:bg-primary-700 disabled:opacity-50"
                     >
-                      {isSubmitting ? (
-                        language === 'en' ? 'Sending...' : 'Slanje...'
-                      ) : (
-                        language === 'en' ? 'Continue' : 'Nastavi'
-                      )}
+                      {language === 'en' ? 'Continue' : 'Nastavi'}
                     </button>
                   </div>
                 </form>
@@ -199,14 +214,9 @@ const PricingModal: React.FC<PricingModalProps> = ({ isOpen, onClose, selectedPl
               <div className="text-center">
                 <h2 className="text-2xl font-bold mb-4">
                   {language === 'en' 
-                    ? 'Thank you for your interest in our EasyBook application.'
-                    : 'Hvala na interesovanju za našu EasyBook aplikaciju.'}
+                    ? 'Your information has been submitted. We will contact you soon.'
+                    : 'Vaši podaci su prosleđeni. Uskoro ćemo vas kontaktirati.'}
                 </h2>
-                <p className="text-gray-600 mb-6">
-                  {language === 'en'
-                    ? 'Our agent will contact you soon.'
-                    : 'Naš agent će vas uskoro kontaktirati.'}
-                </p>
                 <button
                   onClick={onClose}
                   className="px-6 py-2 bg-primary-600 text-white rounded-md hover:bg-primary-700"
