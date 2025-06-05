@@ -3,8 +3,28 @@ const { Resend } = require('resend');
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 exports.handler = async function(event, context) {
+  // Add CORS headers
+  const headers = {
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Headers': 'Content-Type',
+    'Access-Control-Allow-Methods': 'POST, OPTIONS',
+  };
+
+  // Handle preflight requests
+  if (event.httpMethod === 'OPTIONS') {
+    return {
+      statusCode: 204,
+      headers,
+      body: '',
+    };
+  }
+
   if (event.httpMethod !== 'POST') {
-    return { statusCode: 405, body: 'Method Not Allowed' };
+    return {
+      statusCode: 405,
+      headers,
+      body: JSON.stringify({ error: 'Method Not Allowed' }),
+    };
   }
 
   try {
@@ -29,11 +49,25 @@ exports.handler = async function(event, context) {
     });
 
     if (error) {
-      return { statusCode: 500, body: JSON.stringify({ error: error.message }) };
+      console.error('Resend error:', error);
+      return {
+        statusCode: 500,
+        headers,
+        body: JSON.stringify({ error: error.message }),
+      };
     }
 
-    return { statusCode: 200, body: JSON.stringify({ success: true }) };
+    return {
+      statusCode: 200,
+      headers,
+      body: JSON.stringify({ success: true }),
+    };
   } catch (error) {
-    return { statusCode: 500, body: JSON.stringify({ error: 'Internal Server Error' }) };
+    console.error('Server error:', error);
+    return {
+      statusCode: 500,
+      headers,
+      body: JSON.stringify({ error: 'Internal Server Error' }),
+    };
   }
 };

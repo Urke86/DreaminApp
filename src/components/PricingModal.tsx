@@ -23,23 +23,14 @@ const PricingModal: React.FC<PricingModalProps> = ({ isOpen, onClose, selectedPl
     phone: '',
     email: '',
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState('');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsSubmitting(true);
+    setError('');
 
-    // Check if all required fields are filled
-    const requiredFields = ['companyName', 'businessType', 'fullName', 'phone', 'email'];
-    const emptyFields = requiredFields.filter(field => !formData[field as keyof typeof formData]);
-    
-    if (emptyFields.length > 0) {
-      // Use browser's built-in form validation
-      const form = e.target as HTMLFormElement;
-      if (form.reportValidity) {
-        form.reportValidity();
-      }
-      return;
-    }
-    
     try {
       const response = await fetch('/.netlify/functions/send-pricing-form', {
         method: 'POST',
@@ -53,14 +44,21 @@ const PricingModal: React.FC<PricingModalProps> = ({ isOpen, onClose, selectedPl
         }),
       });
 
-      if (response.ok) {
-        setStep(2);
-      } else {
+      if (!response.ok) {
         throw new Error('Failed to send form');
       }
+
+      const data = await response.json();
+      
+      if (data.success) {
+        setStep(2);
+      } else {
+        throw new Error(data.error || 'Failed to send form');
+      }
     } catch (error) {
-      console.error('Error:', error);
-      alert(language === 'en' ? 'An error occurred. Please try again.' : 'Došlo je do greške. Molimo pokušajte ponovo.');
+      setError(language === 'en' ? 'An error occurred. Please try again.' : 'Došlo je do greške. Molimo pokušajte ponovo.');
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -93,12 +91,18 @@ const PricingModal: React.FC<PricingModalProps> = ({ isOpen, onClose, selectedPl
                   <p className="text-xl text-primary mb-4">{selectedPlan.price}</p>
                   <p className="text-gray-600">
                     {language === 'en' 
-                      ? 'Fill in your details and after clicking continue, you will be forwarded to our agents.'
-                      : 'Popunite vaše podatke i nakon klika na nastavi biće prosleđeni našim agentima.'}
+                      ? 'Fill in your details and we will contact you shortly.'
+                      : 'Popunite vaše podatke i kontaktiraćemo vas uskoro.'}
                   </p>
                 </div>
 
-                <form onSubmit={handleSubmit} className="space-y-4 flex-1 flex flex-col justify-between" noValidate>
+                {error && (
+                  <div className="mb-4 p-3 bg-red-100 text-red-700 rounded-md">
+                    {error}
+                  </div>
+                )}
+
+                <form onSubmit={handleSubmit} className="space-y-4">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">
                       {language === 'en' ? 'Company Name' : 'Ime vaše kompanije'} *
@@ -110,7 +114,6 @@ const PricingModal: React.FC<PricingModalProps> = ({ isOpen, onClose, selectedPl
                       value={formData.companyName}
                       onChange={handleChange}
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
-                      title={language === 'en' ? 'Please fill in this field.' : 'Popunite ovo polje.'}
                     />
                   </div>
 
@@ -125,7 +128,6 @@ const PricingModal: React.FC<PricingModalProps> = ({ isOpen, onClose, selectedPl
                       value={formData.businessType}
                       onChange={handleChange}
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
-                      title={language === 'en' ? 'Please fill in this field.' : 'Popunite ovo polje.'}
                     />
                   </div>
 
@@ -140,7 +142,6 @@ const PricingModal: React.FC<PricingModalProps> = ({ isOpen, onClose, selectedPl
                       value={formData.fullName}
                       onChange={handleChange}
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
-                      title={language === 'en' ? 'Please fill in this field.' : 'Popunite ovo polje.'}
                     />
                   </div>
 
@@ -155,7 +156,6 @@ const PricingModal: React.FC<PricingModalProps> = ({ isOpen, onClose, selectedPl
                       value={formData.phone}
                       onChange={handleChange}
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
-                      title={language === 'en' ? 'Please fill in this field.' : 'Popunite ovo polje.'}
                     />
                   </div>
 
@@ -170,23 +170,27 @@ const PricingModal: React.FC<PricingModalProps> = ({ isOpen, onClose, selectedPl
                       value={formData.email}
                       onChange={handleChange}
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
-                      title={language === 'en' ? 'Please fill in this field.' : 'Popunite ovo polje.'}
                     />
                   </div>
 
-                  <div className="flex flex-row justify-between items-center mt-10 pt-4 border-t border-gray-100 px-2">
+                  <div className="flex justify-between items-center mt-6 pt-4 border-t border-gray-100">
                     <button
                       type="button"
                       onClick={onClose}
-                      className="px-6 py-2 rounded-md border border-primary text-primary bg-white hover:bg-gray-100 font-medium transition-colors duration-200 shadow-sm"
+                      className="px-6 py-2 rounded-md border border-gray-300 text-gray-700 hover:bg-gray-50"
                     >
                       {language === 'en' ? 'Cancel' : 'Otkaži'}
                     </button>
                     <button
                       type="submit"
-                      className="w-32 px-6 py-2 rounded-md bg-blue-600 text-white font-bold hover:bg-blue-700 transition-colors duration-200 shadow-sm"
+                      disabled={isSubmitting}
+                      className="px-6 py-2 rounded-md bg-primary-600 text-white font-medium hover:bg-primary-700 disabled:opacity-50"
                     >
-                      {language === 'en' ? 'Continue' : 'Nastavi'}
+                      {isSubmitting ? (
+                        language === 'en' ? 'Sending...' : 'Slanje...'
+                      ) : (
+                        language === 'en' ? 'Continue' : 'Nastavi'
+                      )}
                     </button>
                   </div>
                 </form>
@@ -200,12 +204,12 @@ const PricingModal: React.FC<PricingModalProps> = ({ isOpen, onClose, selectedPl
                 </h2>
                 <p className="text-gray-600 mb-6">
                   {language === 'en'
-                    ? 'An agent from DreaminApp will contact you soon.'
+                    ? 'Our agent will contact you soon.'
                     : 'Naš agent će vas uskoro kontaktirati.'}
                 </p>
                 <button
                   onClick={onClose}
-                  className="px-6 py-2 bg-primary text-white rounded-md hover:bg-primary-dark"
+                  className="px-6 py-2 bg-primary-600 text-white rounded-md hover:bg-primary-700"
                 >
                   {language === 'en' ? 'Close' : 'Zatvori'}
                 </button>
