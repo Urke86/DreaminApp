@@ -1,6 +1,4 @@
-const { Resend } = require('resend');
-
-const resend = new Resend(process.env.RESEND_API_KEY);
+const nodemailer = require('nodemailer');
 
 exports.handler = async function(event, context) {
   // Add CORS headers
@@ -28,34 +26,33 @@ exports.handler = async function(event, context) {
   }
 
   try {
-    const body = JSON.parse(event.body);
-    const { companyName, businessType, fullName, phone, email, selectedPlan, price } = body;
+    const { companyName, businessType, fullName, phone, email, selectedPlan, price } = JSON.parse(event.body);
 
-    const { data, error } = await resend.emails.send({
-      from: 'DreaminApp <noreply@dreaminapp.rs>',
-      to: 'partneri@dreaminapp.rs',
-      subject: `New Plan Selection: ${selectedPlan}`,
-      html: `
-        <h2>New Plan Selection</h2>
-        <p><strong>Selected Plan:</strong> ${selectedPlan}</p>
-        <p><strong>Price:</strong> ${price}</p>
-        <h3>Contact Information:</h3>
-        <p><strong>Company Name:</strong> ${companyName}</p>
-        <p><strong>Business Type:</strong> ${businessType}</p>
-        <p><strong>Full Name:</strong> ${fullName}</p>
-        <p><strong>Phone:</strong> ${phone}</p>
-        <p><strong>Email:</strong> ${email}</p>
-      `,
+    const transporter = nodemailer.createTransport({
+      host: 'smtp.zoho.eu',
+      port: 465,
+      secure: true,
+      auth: {
+        user: process.env.ZOHO_USER, // npr. office@dreaminapp.rs
+        pass: process.env.ZOHO_PASS, // app password
+      },
     });
 
-    if (error) {
-      console.error('Resend error:', error);
-      return {
-        statusCode: 500,
-        headers,
-        body: JSON.stringify({ error: error.message }),
-      };
-    }
+    await transporter.sendMail({
+      from: `DreaminApp Izaberi Plan <${process.env.ZOHO_USER}>`,
+      to: 'office@dreaminapp.rs',
+      subject: `Izaberi plan: ${selectedPlan} (${price})`,
+      html: `
+        <h2>Novi zahtev za plan</h2>
+        <p><strong>Kompanija:</strong> ${companyName}</p>
+        <p><strong>Delatnost:</strong> ${businessType}</p>
+        <p><strong>Ime i prezime:</strong> ${fullName}</p>
+        <p><strong>Telefon:</strong> ${phone}</p>
+        <p><strong>Email:</strong> ${email}</p>
+        <p><strong>Plan:</strong> ${selectedPlan}</p>
+        <p><strong>Cena:</strong> ${price}</p>
+      `,
+    });
 
     return {
       statusCode: 200,
@@ -63,11 +60,11 @@ exports.handler = async function(event, context) {
       body: JSON.stringify({ success: true }),
     };
   } catch (error) {
-    console.error('Server error:', error);
+    console.error('Zoho send error:', error);
     return {
       statusCode: 500,
       headers,
-      body: JSON.stringify({ error: 'Internal Server Error' }),
+      body: JSON.stringify({ error: error.message }),
     };
   }
 };

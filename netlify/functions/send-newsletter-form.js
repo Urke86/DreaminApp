@@ -1,6 +1,4 @@
-const { Resend } = require('resend');
-
-const resend = new Resend(process.env.RESEND_API_KEY);
+const nodemailer = require('nodemailer');
 
 exports.handler = async function(event, context) {
   // Add CORS headers
@@ -28,28 +26,28 @@ exports.handler = async function(event, context) {
   }
 
   try {
-    const body = JSON.parse(event.body);
-    const { email } = body;
+    const { email } = JSON.parse(event.body);
 
-    const { data, error } = await resend.emails.send({
-      from: 'DreaminApp Newsletter <noreply@dreaminapp.rs>',
-      to: 'office@dreaminapp.rs',
-      subject: 'New Newsletter Subscription',
-      html: `
-        <h2>New Newsletter Subscription</h2>
-        <p><strong>Email:</strong> ${email}</p>
-        <p>This is a newsletter subscription request.</p>
-      `,
+    const transporter = nodemailer.createTransport({
+      host: 'smtp.zoho.eu',
+      port: 465,
+      secure: true,
+      auth: {
+        user: process.env.ZOHO_USER, // npr. office@dreaminapp.rs
+        pass: process.env.ZOHO_PASS, // app password
+      },
     });
 
-    if (error) {
-      console.error('Resend error:', error);
-      return {
-        statusCode: 500,
-        headers,
-        body: JSON.stringify({ error: error.message }),
-      };
-    }
+    await transporter.sendMail({
+      from: `DreaminApp Newsletter <${process.env.ZOHO_USER}>`,
+      to: 'office@dreaminapp.rs',
+      subject: 'Nova prijava na newsletter',
+      html: `
+        <h2>Nova prijava na newsletter</h2>
+        <p><strong>Email:</strong> ${email}</p>
+        <p>Ovo je zahtev za prijavu na newsletter.</p>
+      `,
+    });
 
     return {
       statusCode: 200,
@@ -57,11 +55,11 @@ exports.handler = async function(event, context) {
       body: JSON.stringify({ success: true }),
     };
   } catch (error) {
-    console.error('Server error:', error);
+    console.error('Zoho send error:', error);
     return {
       statusCode: 500,
       headers,
-      body: JSON.stringify({ error: 'Internal Server Error' }),
+      body: JSON.stringify({ error: error.message }),
     };
   }
 };

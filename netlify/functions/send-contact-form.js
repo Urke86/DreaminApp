@@ -1,6 +1,4 @@
-const { Resend } = require('resend');
-
-const resend = new Resend(process.env.RESEND_API_KEY);
+const nodemailer = require('nodemailer');
 
 exports.handler = async function(event, context) {
   // Add CORS headers
@@ -28,32 +26,30 @@ exports.handler = async function(event, context) {
   }
 
   try {
-    const body = JSON.parse(event.body);
-    const { name, email, subject, message } = body;
+    const { name, email, subject, message } = JSON.parse(event.body);
 
-    const { data, error } = await resend.emails.send({
-      from: 'DreaminApp Contact Form <noreply@dreaminapp.rs>',
-      to: 'podrska@dreaminapp.rs',
-      subject: `New Contact Form Submission: ${subject}`,
-      html: `
-        <h2>New Contact Form Submission</h2>
-        <h3>Contact Information:</h3>
-        <p><strong>Name:</strong> ${name}</p>
-        <p><strong>Email:</strong> ${email}</p>
-        <p><strong>Subject:</strong> ${subject}</p>
-        <h3>Message:</h3>
-        <p>${message}</p>
-      `,
+    const transporter = nodemailer.createTransport({
+      host: 'smtp.zoho.eu',
+      port: 465,
+      secure: true,
+      auth: {
+        user: process.env.ZOHO_USER, // npr. office@dreaminapp.rs
+        pass: process.env.ZOHO_PASS, // app password
+      },
     });
 
-    if (error) {
-      console.error('Resend error:', error);
-      return {
-        statusCode: 500,
-        headers,
-        body: JSON.stringify({ error: error.message }),
-      };
-    }
+    await transporter.sendMail({
+      from: `DreaminApp Kontakt <${process.env.ZOHO_USER}>`,
+      to: 'office@dreaminapp.rs',
+      subject: `Kontakt forma: ${subject}`,
+      html: `
+        <h2>Nova poruka sa kontakt forme</h2>
+        <p><strong>Ime:</strong> ${name}</p>
+        <p><strong>Email:</strong> ${email}</p>
+        <p><strong>Predmet:</strong> ${subject}</p>
+        <p><strong>Poruka:</strong> ${message}</p>
+      `,
+    });
 
     return {
       statusCode: 200,
@@ -61,11 +57,11 @@ exports.handler = async function(event, context) {
       body: JSON.stringify({ success: true }),
     };
   } catch (error) {
-    console.error('Server error:', error);
+    console.error('Zoho send error:', error);
     return {
       statusCode: 500,
       headers,
-      body: JSON.stringify({ error: 'Internal Server Error' }),
+      body: JSON.stringify({ error: error.message }),
     };
   }
 };
