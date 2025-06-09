@@ -102,8 +102,8 @@ const Footer = () => {
             </div>
             <p className="text-gray-400 mb-6">
               {language === 'en' 
-                ? 'We create beautiful digital experiences that drive growth and transform businesses.'
-                : 'Kreiramo prelepa digitalna iskustva koja podstiču rast i transformišu poslovanje.'}
+                ? 'We transform your ideas into digital products – specialized in MVP development, SaaS solutions, and web applications.'
+                : 'Transformišemo vaše ideje u digitalne proizvode – specijalizovani za MVP razvoj, SaaS rešenja i web aplikacije'}
             </p>
             <div className="flex space-x-4">
               <a href="#" className="w-8 h-8 rounded-full bg-gray-800 flex items-center justify-center hover:bg-primary-600 transition-colors">

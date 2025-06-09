@@ -184,8 +184,8 @@ const Contact = () => {
                   <MapPin className="w-6 h-6 text-primary-600" />
                 </div>
                 <div>
-                  <h4 className="font-bold">Kontaktirajte Nas</h4>
-                  <p className="text-gray-600">Uvek dostupni online – tu smo za vaša pitanja!</p>
+                  <h4 className="font-bold">{language === 'en' ? 'Contact Us' : 'Kontaktirajte Nas'}</h4>
+                  <p className="text-gray-600">{language === 'en' ? 'Always available online – we are here for your questions!' : 'Uvek dostupni online – tu smo za vaša pitanja!'}</p>
                 </div>
               </div>
             </div>
