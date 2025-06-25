@@ -174,15 +174,17 @@ const CoreProduct: React.FC = () => {
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
             {t.subtitle}
           </p>
-          <a 
-            href="https://easybook1.netlify.app/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center text-primary-600 hover:text-primary-700 font-medium mt-4 transition-colors"
-          >
-            {language === 'en' ? 'Click to explore our EasyBook solution' : 'Klikni da istražiš naše EasyBook rešenje'}
-            <ExternalLink className="ml-2 w-4 h-4" />
-          </a>
+          <div className="flex justify-center mt-4">
+            <a
+              href="https://easybook1.netlify.app/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn btn-primary text-lg font-semibold shadow-glow px-8 py-3 flex items-center gap-2"
+            >
+              {language === 'en' ? 'Open EasyBook app' : 'Otvori EasyBook aplikaciju'}
+              <ExternalLink className="ml-2 w-5 h-5" />
+            </a>
+          </div>
         </motion.div>
 
         <div className="grid md:grid-cols-2 gap-12 items-center mb-20">
