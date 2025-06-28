@@ -9,6 +9,7 @@ import Testimonials from './components/Testimonials';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import { LanguageProvider, useLanguage } from './context/LanguageContext';
+import { Helmet } from 'react-helmet';
 
 function MetaTags() {
   const { language } = useLanguage();
@@ -43,9 +44,27 @@ function MetaTags() {
   return null;
 }
 
+function SEOHelmet() {
+  return (
+    <Helmet>
+      <script type="application/ld+json">{`
+        {\n  \"@context\": \"https://schema.org\",\n  \"@type\": \"Organization\",\n  \"name\": \"DreaminApp\",\n  \"url\": \"https://www.dreaminapp.rs/\",\n  \"logo\": \"https://www.dreaminapp.rs/Modern-Minimalist%20Logo%20for%20DreaminApp%20-%20Version%204%20(2).png\",\n  \"description\": \"We transform your ideas into digital products – specialized in MVP development, SaaS solutions, and web applications.\",\n  \"sameAs\": [\n    \"https://www.linkedin.com/company/dreaminapp/\"\n  ]\n}\n      `}</script>
+      <script type="application/ld+json">{`
+        {\n  \"@context\": \"https://schema.org\",\n  \"@type\": \"WebSite\",\n  \"url\": \"https://www.dreaminapp.rs/\",\n  \"potentialAction\": {\n    \"@type\": \"SearchAction\",\n    \"target\": \"https://www.dreaminapp.rs/?s={search_term_string}\",\n    \"query-input\": \"required name=search_term_string\"\n  }\n}\n      `}</script>
+      <script type="application/ld+json">{`
+        {\n  \"@context\": \"https://schema.org/\",\n  \"@type\": \"Product\",\n  \"name\": \"EasyBook\",\n  \"image\": [\n    \"https://www.dreaminapp.rs/Modern-Minimalist%20Logo%20for%20DreaminApp%20-%20Version%204%20(2).png\"\n  ],\n  \"description\": \"EasyBook je sveobuhvatna aplikacija za online zakazivanje termina za razne delatnosti.\",\n  \"brand\": {\n    \"@type\": \"Brand\",\n    \"name\": \"DreaminApp\"\n  },\n  \"offers\": {\n    \"@type\": \"Offer\",\n    \"priceCurrency\": \"EUR\",\n    \"price\": \"15-60\",\n    \"availability\": \"https://schema.org/InStock\",\n    \"url\": \"https://www.dreaminapp.rs/#core-product\"\n  }\n}\n      `}</script>
+      <script type="application/ld+json">{`
+        {\n  \"@context\": \"https://schema.org\",\n  \"@type\": \"BreadcrumbList\",\n  \"itemListElement\": [\n    {\n      \"@type\": \"ListItem\",\n      \"position\": 1,\n      \"name\": \"Početna\",\n      \"item\": \"https://www.dreaminapp.rs/\"\n    },\n    {\n      \"@type\": \"ListItem\",\n      \"position\": 2,\n      \"name\": \"EasyBook\",\n      \"item\": \"https://www.dreaminapp.rs/#core-product\"\n    },\n    {\n      \"@type\": \"ListItem\",\n      \"position\": 3,\n      \"name\": \"Portfolio\",\n      \"item\": \"https://www.dreaminapp.rs/#portfolio\"\n    },\n    {\n      \"@type\": \"ListItem\",\n      \"position\": 4,\n      \"name\": \"Kontakt\",\n      \"item\": \"https://www.dreaminapp.rs/#contact\"\n    }\n  ]\n}\n      `}</script>
+      <script type="application/ld+json">{`
+        {\n  \"@context\": \"https://schema.org\",\n  \"@type\": \"FAQPage\",\n  \"mainEntity\": [\n    {\n      \"@type\": \"Question\",\n      \"name\": \"Šta je EasyBook?\",\n      \"acceptedAnswer\": {\n        \"@type\": \"Answer\",\n        \"text\": \"EasyBook je aplikacija za online zakazivanje termina za različite delatnosti.\"\n      }\n    },\n    {\n      \"@type\": \"Question\",\n      \"name\": \"Kako mogu da integrišem EasyBook na svoj sajt?\",\n      \"acceptedAnswer\": {\n        \"@type\": \"Answer\",\n        \"text\": \"Naš tim može integrisati EasyBook direktno na vaš postojeći sajt ili kreirati posebnu stranicu za zakazivanje.\"\n      }\n    },\n    {\n      \"@type\": \"Question\",\n      \"name\": \"Koje su cene EasyBook aplikacije?\",\n      \"acceptedAnswer\": {\n        \"@type\": \"Answer\",\n        \"text\": \"Cene se kreću od 15€ do 60€ mesečno, u zavisnosti od paketa.\"\n      }\n    }\n  ]\n}\n      `}</script>
+    </Helmet>
+  );
+}
+
 function App() {
   return (
     <LanguageProvider>
+      <SEOHelmet />
       <MetaTags />
       <div className="relative overflow-hidden">
         <Navbar />
