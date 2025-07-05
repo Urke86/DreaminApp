@@ -2,6 +2,11 @@
   directory = "netlify/functions"
   
 [[redirects]]
+  from = "/paketi"
+  to = "/#core-product"
+  status = 301
+
+[[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200

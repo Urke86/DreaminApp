@@ -34,7 +34,7 @@ exports.handler = async function(event, context) {
       secure: true,
       auth: {
         user: process.env.ZOHO_USER, // npr. office@dreaminapp.rs
-        pass: process.env.ZOHO_PASS, // app password
+        pass: process.env.  ZOHO_PASS, // app password
       },
     });
 

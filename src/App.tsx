@@ -62,6 +62,19 @@ function SEOHelmet() {
 }
 
 function App() {
+  // Automatski skrol do sekcije na osnovu hash-a u URL-u
+  React.useEffect(() => {
+    if (window.location.hash) {
+      const id = window.location.hash.replace('#', '');
+      setTimeout(() => {
+        const el = document.getElementById(id);
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }, 100); // Kratko kašnjenje da se DOM učita
+    }
+  }, []);
+
   return (
     <LanguageProvider>
       <SEOHelmet />
