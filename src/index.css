@@ -1,91 +1,39 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
-  html {
-    scroll-behavior: smooth;
-  }
-  
-  body {
-    @apply font-sans text-gray-800 bg-white;
-    overflow-x: hidden;
-    cursor: default;
-  }
-  
-  h1, h2, h3, h4, h5, h6 {
-    @apply font-heading tracking-tight;
-  }
-
-  /* Modern cursor styles */
-  a, button, [role="button"], .nav-item, .btn {
-    cursor: pointer;
-  }
+  :root { color-scheme: dark; }
+  html { scroll-behavior: smooth; scroll-padding-top: 94px; }
+  body { @apply m-0 bg-[#090E1B] text-white antialiased; font-family: 'DM Sans', sans-serif; overflow-x: hidden; }
+  h1, h2, h3, h4, h5, h6 { font-family: 'Manrope', sans-serif; }
+  button, a { -webkit-tap-highlight-color: transparent; }
+  button:not(:disabled), a { cursor: pointer; }
+  ::selection { background: #9D90EF; color: #0A1020; }
 }
 
 @layer components {
-  .section {
-    @apply py-16 md:py-24;
-  }
-  
-  .container {
-    @apply px-4 mx-auto max-w-7xl;
-  }
-  
-  .btn {
-    @apply inline-flex items-center justify-center px-6 py-3 text-base font-medium rounded-lg transition-all duration-300;
-  }
-  
-  .btn-primary {
-    @apply bg-[#6C63FF] hover:bg-[#5750cc] text-white shadow-md hover:shadow-lg;
-  }
-  
-  .btn-secondary {
-    @apply bg-white border border-[#6C63FF] text-[#6C63FF] hover:bg-[#f5f4ff];
-  }
-  
-  .btn-accent {
-    @apply bg-accent-500 hover:bg-accent-600 text-white shadow-md hover:shadow-lg;
-  }
-  
-  .card {
-    @apply bg-white/90 backdrop-blur-sm rounded-2xl shadow-soft p-6 transition-all duration-300 hover:shadow-glow border border-primary-100;
-  }
-  
-  .nav-item {
-    @apply px-4 py-2 text-gray-700 hover:text-[#6C63FF] transition-colors duration-300;
-  }
+  .container { @apply mx-auto w-full max-w-[1320px] px-5 sm:px-8 lg:px-12; }
+  .studio-eyebrow { @apply text-xs font-semibold uppercase tracking-[.22em] text-[#B6ABFF]; }
+  .studio-section-title { @apply max-w-[780px] text-[clamp(2.35rem,4.8vw,4.5rem)] font-semibold leading-[1.12] tracking-[-.055em] text-white; }
+  .studio-gradient-text { background: linear-gradient(105deg, #C8C1FF 5%, #988AFF 45%, #90E8D5 100%); background-clip: text; -webkit-background-clip: text; color: transparent; }
+  .studio-button-primary { @apply inline-flex min-h-[52px] items-center justify-center gap-3 rounded-full bg-[#9D90FF] px-7 py-3 text-sm font-bold text-[#0C1020] transition-all duration-300 hover:bg-[#B8AEFF] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#C7BDFF]; }
+  .studio-button-outline { @apply inline-flex min-h-[52px] items-center justify-center gap-3 rounded-full border border-white/20 bg-white/[.045] px-7 py-3 text-sm font-semibold text-white transition-colors duration-300 hover:border-white/40 hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#C7BDFF]; }
+  .studio-grid { background-image: linear-gradient(rgba(165,176,220,.05) 1px, transparent 1px), linear-gradient(90deg, rgba(165,176,220,.05) 1px, transparent 1px); background-size: 70px 70px; mask-image: linear-gradient(to bottom, transparent, black 24%, black 72%, transparent); -webkit-mask-image: linear-gradient(to bottom, transparent, black 24%, black 72%, transparent); }
+  .studio-service-card { transition: transform 280ms ease, border-color 280ms ease, background-color 280ms ease; }
+  .studio-service-card:hover { transform: translateY(-4px); border-color: rgba(177,164,255,.3); background-color: #18253A; }
+  .skip-link { position: fixed; left: 12px; top: -100px; z-index: 100; border-radius: 10px; background: #fff; color: #0A1020; padding: 12px 18px; font-weight: 700; }
+  .skip-link:focus { top: 10px; }
 }
 
-/* 3D and animation utilities */
-.perspective {
-  perspective: 2000px;
+/* Smooth layout, including users who disable animations. */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
 }
 
-.rotate-y-2 {
-  transform: rotateY(2deg);
-}
-
-.glass-effect {
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.18);
-}
-
-.text-gradient {
-  background-clip: text;
-  -webkit-background-clip: text;
-  color: transparent;
-  background-image: linear-gradient(to right, #6C63FF, #00C9A7);
-}
-
-.shadow-soft {
-  box-shadow: 0 8px 30px rgba(108, 99, 255, 0.12);
-}
-
-.shadow-glow {
-  box-shadow: 0 0 20px rgba(108, 99, 255, 0.2);
+@media (max-width: 640px) {
+  .studio-service-card:hover { transform: none; }
 }
