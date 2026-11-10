@@ -1,4 +1,4 @@
-const nodemailer = require('nodemailer');
+import nodemailer from 'nodemailer';
 
 const json = (statusCode, data) => ({
   statusCode,
@@ -9,7 +9,7 @@ const json = (statusCode, data) => ({
 const clean = (value, limit) =>
   typeof value === 'string' ? value.trim().slice(0, limit) : '';
 
-exports.handler = async function (event) {
+export const handler = async function (event) {
   if (event.httpMethod !== 'POST') {
     return json(405, { error: 'Method not allowed' });
   }
