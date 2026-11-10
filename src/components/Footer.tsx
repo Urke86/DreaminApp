@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-scroll';
-import { Menu, X, ChevronRight } from 'lucide-react';
+import { X, ChevronRight } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import { motion, AnimatePresence } from 'framer-motion';
 
