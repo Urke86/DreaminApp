@@ -1,5 +1,5 @@
 
-import { ArrowLeft, ArrowUpRight, CalendarClock, CheckCircle2, ClipboardList, Languages, Layers3, ShieldCheck, Users } from 'lucide-react';
+import { ArrowLeft, ArrowUpRight, CalendarClock, CheckCircle2, ClipboardList, Languages, Layers3, ShieldCheck } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import EasyBookVisual from './EasyBookVisual';
 
