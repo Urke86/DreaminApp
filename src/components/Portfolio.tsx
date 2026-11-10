@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import { ArrowDownRight, ArrowUpRight, Layers3 } from 'lucide-react';
-import { motion, useReducedMotion } from 'framer-motion';
+import { ArrowDownRight, ArrowUpRight } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
-import { studioProjects, type ProjectCategory } from '../data/projects';
+import type { ProjectCategory } from '../data/projects';
+import AiProjectShowcase from './AiProjectShowcase';
 import EasyBookVisual from './EasyBookVisual';
 
 type Filter = 'All' | ProjectCategory;
@@ -123,12 +123,11 @@ function GarancijeFeaturedCard({ locale }: { locale: 'en' | 'sr' }) {
 export default function Portfolio() {
   const { language } = useLanguage();
   const locale = language === 'sr' ? 'sr' : 'en';
-  const reduceMotion = useReducedMotion();
   const [filter, setFilter] = useState<Filter>('All');
   const showFeatured = filter === 'All' || filter === 'Mobile Apps';
   const showEasyBook = filter === 'All' || filter === 'SaaS';
   const showGarancije = filter === 'All' || filter === 'Mobile Apps';
-  const projects = studioProjects.filter((project) => project.id !== '18holes' && project.id !== 'easybook' && project.id !== 'garancije' && (filter === 'All' || project.category === filter));
+  const showAi = filter === 'All' || filter === 'AI & Automation';
 
   return (
     <section id="portfolio" className="relative bg-[#0B1020] py-24 text-white md:py-32">
@@ -151,32 +150,7 @@ export default function Portfolio() {
         {showFeatured && <GolfFeaturedCard locale={locale} />}
         {showEasyBook && <EasyBookFeaturedCard locale={locale} />}
         {showGarancije && <GarancijeFeaturedCard locale={locale} />}
-        {projects.length > 0 && <div className="grid gap-6 md:grid-cols-2">
-          {projects.map((project, index) => (
-            <motion.article key={project.id} initial={reduceMotion ? false : {opacity:0,y:15}} whileInView={{opacity:1,y:0}} viewport={{once:true,amount:0.1}} transition={{duration:0.4,delay:Math.min(index,3)*0.06}} className="group overflow-hidden rounded-[26px] border border-white/10 bg-[#141B2D]">
-              <div className="relative flex min-h-52 items-center justify-center overflow-hidden p-8 sm:min-h-64" style={{background:`radial-gradient(circle at 78% 28%, ${project.accent}30, transparent 58%), linear-gradient(145deg, #1D2740, #101729)`}}>
-                <div className="pointer-events-none absolute -right-12 -top-12 h-56 w-56 rounded-full border border-white/10" aria-hidden="true" />
-                <div className="relative z-10 w-full max-w-sm rounded-2xl border border-white/15 bg-[#090F1E]/80 p-7 shadow-2xl transition-transform duration-500 group-hover:-translate-y-1">
-                  <div className="mb-7 flex items-center justify-between">
-                    <div className="flex h-9 w-9 items-center justify-center rounded-xl" style={{backgroundColor:project.accent,color:'#101729'}}><Layers3 size={20} aria-hidden="true" /></div>
-                    <span className="font-mono text-xs text-slate-400">{project.number} / 05</span>
-                  </div>
-                  <p className="mb-2 text-xs uppercase tracking-widest text-slate-400">{categoryNames[project.category][locale]}</p>
-                  <h3 className="text-2xl font-semibold tracking-tight sm:text-3xl">{project.name}</h3>
-                  <div className="mt-7 h-1 w-16 rounded-full" style={{backgroundColor:project.accent}} />
-                </div>
-              </div>
-              <div className="p-6 md:p-8">
-                <div className="mb-3 flex items-center justify-between gap-3">
-                  <span className="text-xs font-medium uppercase tracking-[0.15em] text-[#B4A9FF]">{categoryNames[project.category][locale]}</span>
-                  <span className="rounded-full border border-white/15 px-3 py-1 text-xs text-slate-300">{project.stage === 'Released' ? (locale === 'en' ? 'Released' : 'Objavljeno') : (locale === 'en' ? 'In development' : 'U razvoju')}</span>
-                </div>
-                <p className="mb-5 min-h-14 text-sm leading-relaxed text-slate-300 md:text-base">{project.summary[locale]}</p>
-                <div className="flex flex-wrap gap-2">{project.technologies.map(technology => <span key={technology} className="rounded-md bg-white/5 px-2.5 py-1 text-xs text-slate-300">{technology}</span>)}</div>
-              </div>
-            </motion.article>
-          ))}
-        </div>}
+        {showAi && <AiProjectShowcase locale={locale} />}
         <div className="mt-12 flex flex-wrap items-center justify-between gap-5 border-t border-white/10 pt-8">
           <p className="max-w-xl text-sm text-slate-400">{locale === 'en' ? 'Every project starts with a real problem worth solving.' : 'Svaki projekat počinje stvarnim problemom koji vredi rešiti.'}</p>
           <a href="#contact" className="inline-flex items-center gap-2 font-semibold text-[#C3BAFF] hover:text-white">{locale === 'en' ? 'Discuss your project' : 'Razgovarajmo o projektu'} <ArrowDownRight size={17} aria-hidden="true" /></a>
