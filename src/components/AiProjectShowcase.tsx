@@ -1,4 +1,4 @@
-import { ArrowUpRight, Bot, MessageCircle2, Sparkles, Workflow } from 'lucide-react';
+import { ArrowUpRight, Bot, MessageCircle, Sparkles } from 'lucide-react';
 
 export default function AiProjectShowcase({ locale }: { locale: 'en' | 'sr' }) {
   const en = locale === 'en';
@@ -44,7 +44,7 @@ export default function AiProjectShowcase({ locale }: { locale: 'en' | 'sr' }) {
               <div className="mb-2 flex items-center gap-2 text-[10px] font-semibold text-[#F1C9B7]"><Bot size={13} aria-hidden="true"/> Compa</div>
               <p className="text-[11px] leading-5 text-[#D8D5E4]">{en ? 'Start with your priorities. I can help turn them into a clear plan.' : 'Krenimo od prioriteta. Pretvorićemo ih u jasan plan.'}</p>
             </div>
-            <div className="mt-6 flex items-center justify-between rounded-full border border-white/10 bg-[#1E2234] px-4 py-3 text-[10px] text-[#9294AC]"><span>{en ? 'Write a message...' : 'Napiši poruku...'}</span><MessageCircle2 size={14} aria-hidden="true"/></div>
+            <div className="mt-6 flex items-center justify-between rounded-full border border-white/10 bg-[#1E2234] px-4 py-3 text-[10px] text-[#9294AC]"><span>{en ? 'Write a message...' : 'Napiši poruku...'}</span><MessageCircle size={14} aria-hidden="true"/></div>
           </div>
           <span className="absolute bottom-5 left-5 rounded-full border border-white/15 bg-[#27243A]/85 px-3 py-1.5 text-[10px] font-medium text-[#E8C9D8]">{en ? 'Illustrative concept · not app screenshot' : 'Ilustrativni koncept · nije screenshot'}</span>
         </div>
