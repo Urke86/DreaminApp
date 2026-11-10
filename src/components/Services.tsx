@@ -1,7 +1,6 @@
-import React from 'react';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
-import { Globe, ShoppingBag, Layout, PenTool, Server, Smartphone, Rocket, Lightbulb, Target, Users } from 'lucide-react';
+import { Globe, ShoppingBag, Layout, PenTool, Server, Smartphone, Lightbulb, Target, Users } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import { translations } from '../translations';
 
