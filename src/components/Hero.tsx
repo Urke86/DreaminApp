@@ -13,30 +13,30 @@ export default function Hero() {
       <div className="pointer-events-none absolute -right-32 top-10 h-[580px] w-[580px] rounded-full bg-violet-600/15 blur-[110px]" aria-hidden="true" />
       <div className="pointer-events-none absolute -left-40 bottom-0 h-96 w-96 rounded-full bg-cyan-400/10 blur-[110px]" aria-hidden="true" />
 
-      <div className="container relative z-10 grid min-h-[760px] items-center gap-12 pb-20 pt-36 lg:min-h-[850px] lg:grid-cols-[1.08fr_0.92fr] lg:gap-6 lg:pb-28 lg:pt-40">
+      <div className="container relative z-10 grid items-center gap-8 pb-12 pt-28 sm:gap-12 sm:pb-20 sm:pt-36 lg:min-h-[850px] lg:grid-cols-[1.08fr_0.92fr] lg:gap-6 lg:pb-28 lg:pt-40">
         <motion.div
           initial={reduceMotion ? false : { opacity: 0, y: 22 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, ease: 'easeOut' }}
           className="relative z-20 max-w-3xl"
         >
-          <div className="mb-9 inline-flex items-center gap-2.5 rounded-full border border-white/15 bg-white/[0.055] px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.19em] text-slate-200 backdrop-blur-xl sm:text-xs">
+          <div className="mb-6 inline-flex sm:mb-9 items-center gap-2.5 rounded-full border border-white/15 bg-white/[0.055] px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.19em] text-slate-200 backdrop-blur-xl sm:text-xs">
             <span className="relative flex h-2 w-2">
               <span className="absolute inset-0 rounded-full bg-[#8FF2D5] opacity-40 motion-safe:animate-ping" />
               <span className="relative h-2 w-2 rounded-full bg-[#8FF2D5]" />
             </span>
-            {en ? 'Independent digital product studio' : 'Nezavisni digitalni product studio'}
+            {en ? 'Independent digital product studio' : 'Studio za razvoj digitalnih proizvoda'}
           </div>
 
-          <h1 className="max-w-[880px] text-[clamp(3.2rem,6.7vw,7.3rem)] font-semibold leading-[0.99] tracking-[-0.065em]">
+          <h1 className="max-w-[880px] text-[clamp(2.8rem,6.7vw,7.3rem)] font-semibold leading-[0.99] tracking-[-0.065em]">
             {en ? <>Ideas deserve <span className="studio-gradient-text">exceptional</span> execution.</> : <>Ideje zaslužuju <span className="studio-gradient-text">izuzetnu</span> realizaciju.</>}
           </h1>
-          <p className="mt-8 max-w-[570px] text-base leading-[1.85] text-[#B6C2D8] sm:text-lg">
+          <p className="mt-5 max-w-[570px] sm:mt-8 text-base leading-[1.85] text-[#B6C2D8] sm:text-lg">
             {en
               ? 'We design and build thoughtful SaaS platforms, mobile apps and AI-powered experiences — from the first sketch to a real product.'
               : 'Dizajniramo i razvijamo SaaS platforme, mobilne aplikacije i AI rešenja — od prve ideje do stvarnog digitalnog proizvoda.'}
           </p>
-          <div className="mt-10 flex flex-col gap-3 sm:flex-row">
+          <div className="mt-7 flex flex-col gap-3 sm:mt-10 sm:flex-row">
             <a className="studio-button-primary group" href="#portfolio">
               {en ? 'Explore selected work' : 'Pogledaj naše projekte'}
               <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" aria-hidden="true" />
@@ -46,7 +46,7 @@ export default function Hero() {
               <ArrowUpRight className="h-4 w-4 opacity-70 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" aria-hidden="true" />
             </a>
           </div>
-          <div className="mt-16 flex flex-wrap items-center gap-x-9 gap-y-5 border-t border-white/10 pt-7">
+          <div className="mt-9 flex flex-wrap items-center gap-x-6 gap-y-3 border-t border-white/10 pt-5 sm:mt-16 sm:gap-x-9 sm:gap-y-5 sm:pt-7">
             <div className="flex items-center gap-3">
               <Sparkles className="h-5 w-5 text-[#B6A9FF]" aria-hidden="true" />
               <span className="text-xs font-medium uppercase tracking-[0.14em] text-[#BBC5D8]">AI & Automation</span>
@@ -77,7 +77,7 @@ export default function Hero() {
               <div className="flex gap-1.5" aria-hidden="true"><span className="h-1.5 w-1.5 rounded-full bg-white/20" /><span className="h-1.5 w-1.5 rounded-full bg-white/20" /><span className="h-1.5 w-1.5 rounded-full bg-white/20" /></div>
             </div>
             <div className="grid grid-cols-[1.15fr_0.85fr] gap-3">
-              <div className="flex min-h-[265px] flex-col justify-between overflow-hidden rounded-2xl border border-[#7466E8]/25 bg-gradient-to-br from-[#352A6F] via-[#181D42] to-[#11192C] p-5 sm:min-h-[335px] sm:p-7">
+              <div className="flex min-h-[210px] flex-col justify-between overflow-hidden rounded-2xl border border-[#7466E8]/25 bg-gradient-to-br from-[#352A6F] via-[#181D42] to-[#11192C] p-5 sm:min-h-[335px] sm:p-7">
                 <div><span className="text-[10px] font-medium uppercase tracking-[.22em] text-[#C8C0FF]">01 / Product experience</span><p className="mt-7 max-w-[210px] text-2xl font-semibold leading-tight tracking-tight text-white sm:text-4xl">Built for what comes next<span className="text-[#9DE6D5]">.</span></p></div>
                 <div className="relative mt-6 h-24 rounded-xl border border-white/20 bg-white/5 p-3 shadow-2xl sm:h-32">
                   <div className="flex items-center gap-1.5"><span className="h-1.5 w-8 rounded-full bg-[#BBAFFF]" /><span className="h-1.5 w-12 rounded-full bg-white/20" /></div>
@@ -108,7 +108,7 @@ export default function Hero() {
         </motion.div>
       </div>
       <div className="relative z-10 border-t border-white/10 bg-white/[0.025]">
-        <div className="container flex flex-col justify-between gap-4 py-5 text-[11px] font-medium uppercase tracking-[0.18em] text-[#91A0B7] sm:flex-row sm:items-center">
+        <div className="container flex flex-col justify-between gap-3 py-4 sm:gap-4 sm:py-5 text-[11px] font-medium uppercase tracking-[0.18em] text-[#91A0B7] sm:flex-row sm:items-center">
           <span>{en ? 'Purposeful digital experiences, built to last' : 'Digitalna iskustva sa jasnom svrhom'}</span>
           <a href="#services" className="inline-flex items-center gap-2 text-[#B5BDF3] transition-colors hover:text-white">{en ? 'Discover the studio' : 'Upoznaj studio'} <ArrowDownRight size={15} aria-hidden="true" /></a>
         </div>
