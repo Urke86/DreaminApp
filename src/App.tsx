@@ -5,6 +5,7 @@ import Services from './components/Services';
 import Portfolio from './components/Portfolio';
 import CaseStudy18Holes from './components/CaseStudy18Holes';
 import EasyBookCaseStudy from './components/EasyBookCaseStudy';
+import GarancijeCaseStudy from './components/GarancijeCaseStudy';
 import About from './components/About';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
@@ -97,6 +98,7 @@ function App() {
           <Portfolio />
           <CaseStudy18Holes />
           <EasyBookCaseStudy />
+          <GarancijeCaseStudy />
           <About />
           <Contact />
         </main>
