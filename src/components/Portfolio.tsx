@@ -87,6 +87,39 @@ function EasyBookFeaturedCard({ locale }: { locale: 'en' | 'sr' }) {
   );
 }
 
+
+function GarancijeFeaturedCard({ locale }: { locale: 'en' | 'sr' }) {
+  const en = locale === 'en';
+  return (
+    <article className="mb-8 overflow-hidden rounded-[30px] border border-[#82E1D7]/20 bg-[#112F41]">
+      <div className="grid lg:grid-cols-[0.9fr_1.1fr]">
+        <div className="relative z-10 flex flex-col justify-center p-7 sm:p-10 lg:p-12 xl:p-14">
+          <div className="mb-7 inline-flex w-fit items-center gap-2 rounded-full border border-[#A2F2E4]/25 bg-[#A2F2E4]/10 px-3.5 py-2 text-[11px] font-semibold uppercase tracking-[.15em] text-[#B0F5E4]">
+            <span className="h-1.5 w-1.5 rounded-full bg-[#83E8D4]" />
+            {en ? 'Mobile product case study' : 'Studija mobilnog proizvoda'}
+          </div>
+          <p className="mb-3 text-xs font-semibold uppercase tracking-[.17em] text-[#99C7D8]">{en ? 'Receipts · Warranties · OCR' : 'Računi · Garancije · OCR'}</p>
+          <h3 className="text-4xl font-semibold tracking-[-.055em] text-white sm:text-5xl xl:text-6xl">Garancije<span className="text-[#8CE8D5]">.rs</span></h3>
+          <p className="mt-5 max-w-lg text-base leading-8 text-[#C4D9E5]">
+            {en
+              ? 'An intuitive mobile home for saved receipts, warranty dates, product records and OCR-assisted capture.'
+              : 'Mobilna aplikacija za čuvanje računa, praćenje garancija i lakši unos podataka uz OCR prepoznavanje.'}
+          </p>
+          <div className="mt-7 flex flex-wrap gap-2">{['React Native', 'Expo', 'Supabase'].map(tag => <span key={tag} className="rounded-full border border-[#8CE8D5]/20 bg-black/10 px-3 py-1.5 text-xs text-[#D1E5EE]">{tag}</span>)}</div>
+          <a href="#case-study-garancije" className="mt-9 inline-flex w-fit items-center gap-3 rounded-full bg-[#94EBDD] px-6 py-3.5 text-sm font-bold text-[#112D37] transition-colors hover:bg-[#B8FFF2] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#94EBDD]">
+            {en ? 'Explore case study' : 'Pogledaj studiju projekta'} <ArrowUpRight size={17} aria-hidden="true" />
+          </a>
+        </div>
+        <div className="relative flex min-h-[300px] items-center justify-center overflow-hidden border-t border-white/10 bg-[radial-gradient(ellipse_at_center,#387D88_0%,#1B5260_58%,#133847_100%)] p-4 sm:min-h-[420px] sm:p-8 lg:border-l lg:border-t-0">
+          <div className="pointer-events-none absolute -right-24 -top-24 h-64 w-64 rounded-full bg-[#85EFE0]/20 blur-3xl" aria-hidden="true" />
+          <img src="/projects/garancije-feature.png" loading="lazy" decoding="async" alt={en ? 'Garancije.rs original product illustration with receipt mascot and feature overview' : 'Originalni promotivni vizual Garancije.rs sa maskotom računa i funkcionalnostima'} className="relative w-full max-w-[670px] rounded-2xl shadow-[0_25px_70px_rgba(3,20,31,.35)]" />
+          <span className="absolute bottom-5 left-5 rounded-full border border-white/15 bg-[#102D3C]/85 px-3 py-2 text-[10px] font-semibold tracking-[.08em] text-[#D7F1EE] backdrop-blur-md sm:bottom-8 sm:left-8">{en ? 'Original product artwork' : 'Originalni vizual proizvoda'}</span>
+        </div>
+      </div>
+    </article>
+  );
+}
+
 export default function Portfolio() {
   const { language } = useLanguage();
   const locale = language === 'sr' ? 'sr' : 'en';
@@ -94,7 +127,8 @@ export default function Portfolio() {
   const [filter, setFilter] = useState<Filter>('All');
   const showFeatured = filter === 'All' || filter === 'Mobile Apps';
   const showEasyBook = filter === 'All' || filter === 'SaaS';
-  const projects = studioProjects.filter((project) => project.id !== '18holes' && project.id !== 'easybook' && (filter === 'All' || project.category === filter));
+  const showGarancije = filter === 'All' || filter === 'Mobile Apps';
+  const projects = studioProjects.filter((project) => project.id !== '18holes' && project.id !== 'easybook' && project.id !== 'garancije' && (filter === 'All' || project.category === filter));
 
   return (
     <section id="portfolio" className="relative bg-[#0B1020] py-24 text-white md:py-32">
@@ -116,6 +150,7 @@ export default function Portfolio() {
         </div>
         {showFeatured && <GolfFeaturedCard locale={locale} />}
         {showEasyBook && <EasyBookFeaturedCard locale={locale} />}
+        {showGarancije && <GarancijeFeaturedCard locale={locale} />}
         {projects.length > 0 && <div className="grid gap-6 md:grid-cols-2">
           {projects.map((project, index) => (
             <motion.article key={project.id} initial={reduceMotion ? false : {opacity:0,y:15}} whileInView={{opacity:1,y:0}} viewport={{once:true,amount:0.1}} transition={{duration:0.4,delay:Math.min(index,3)*0.06}} className="group overflow-hidden rounded-[26px] border border-white/10 bg-[#141B2D]">
