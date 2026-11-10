@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useLanguage } from '../context/LanguageContext';
-import { translations } from '../translations';
 
 interface PricingModalProps {
   isOpen: boolean;
