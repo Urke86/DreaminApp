@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import { useRef } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls, Sphere, MeshDistortMaterial } from '@react-three/drei';
 import * as THREE from 'three';
@@ -30,28 +30,8 @@ const AnimatedSphere = () => {
 
 const HeroCanvas = () => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const [size, setSize] = React.useState({ width: 0, height: 0 });
+
   
-  useEffect(() => {
-    if (containerRef.current) {
-      setSize({
-        width: containerRef.current.clientWidth,
-        height: containerRef.current.clientHeight
-      });
-    }
-    
-    const handleResize = () => {
-      if (containerRef.current) {
-        setSize({
-          width: containerRef.current.clientWidth,
-          height: containerRef.current.clientHeight
-        });
-      }
-    };
-    
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
   
   return (
     <div ref={containerRef} className="absolute inset-0 bg-gradient-to-br from-primary-50 to-secondary-50">
