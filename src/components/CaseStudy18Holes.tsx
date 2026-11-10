@@ -95,6 +95,27 @@ export default function CaseStudy18Holes() {
           </div>
         </div>
 
+        <figure className="relative mt-16 overflow-hidden rounded-[28px] border border-[#A7EAC8]/25 bg-gradient-to-br from-[#193B2E] via-[#122E25] to-[#10241F] p-8 sm:p-11">
+          <div className="pointer-events-none absolute -right-10 -top-24 text-[230px] font-serif leading-none text-[#B3F0CD]/[.055]" aria-hidden="true">“</div>
+          <div className="relative max-w-3xl">
+            <p className="mb-7 text-[11px] font-semibold uppercase tracking-[.2em] text-[#A6E8C4]">
+              {en ? 'In the client’s own words' : 'Reči klijenta'}
+            </p>
+            <blockquote className="text-2xl font-medium leading-[1.5] tracking-[-.025em] text-white sm:text-3xl md:text-4xl">
+              “It was a pleasure to work with you, and the delivery is great.”
+            </blockquote>
+            <figcaption className="mt-8 flex flex-wrap items-center justify-between gap-3 border-t border-white/15 pt-6">
+              <div>
+                <p className="text-sm font-semibold text-white">18Holes.Golf {en ? 'client' : 'klijent'}</p>
+                <p className="mt-1 text-xs text-[#A2C6B1]">{en ? 'Direct feedback shared via Upwork · September 2026' : 'Povratna informacija u Upwork poruci · septembar 2026'}</p>
+              </div>
+              <span className="rounded-full border border-[#A7EAC8]/20 px-3 py-1.5 text-[11px] font-medium text-[#BDE9CF]">
+                {en ? 'Verified client message' : 'Proverena poruka klijenta'}
+              </span>
+            </figcaption>
+          </div>
+        </figure>
+
         <div className="mt-16 flex flex-col items-start justify-between gap-7 rounded-[28px] border border-[#A7EAC8]/20 bg-[#133228]/75 p-8 sm:flex-row sm:items-center sm:p-10">
           <div><p className="mb-2 text-xs font-semibold uppercase tracking-[.18em] text-[#A7EAC8]">{en ? 'Your next product' : 'Tvoj sledeći proizvod'}</p><h3 className="max-w-lg text-2xl font-semibold tracking-tight sm:text-3xl">{en ? 'Have something ambitious in mind?' : 'Imaš ideju za sledeći projekat?'}</h3></div>
           <a href="#contact" className="inline-flex items-center gap-2 rounded-full bg-[#A5ECCB] px-6 py-3.5 text-sm font-bold text-[#10291F] hover:bg-[#C9F8DE]">{en ? 'Let’s talk about it' : 'Hajde da razgovaramo'} <ArrowUpRight size={17} aria-hidden="true" /></a>
