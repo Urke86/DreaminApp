@@ -3,6 +3,7 @@ import { ArrowDownRight, ArrowUpRight, Layers3 } from 'lucide-react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { useLanguage } from '../context/LanguageContext';
 import { studioProjects, type ProjectCategory } from '../data/projects';
+import EasyBookVisual from './EasyBookVisual';
 
 type Filter = 'All' | ProjectCategory;
 const categories: Filter[] = ['All', 'SaaS', 'Mobile Apps', 'AI & Automation'];
@@ -55,13 +56,45 @@ function GolfFeaturedCard({ locale }: { locale: 'en' | 'sr' }) {
   );
 }
 
+
+function EasyBookFeaturedCard({ locale }: { locale: 'en' | 'sr' }) {
+  const en = locale === 'en';
+  return (
+    <article className="mb-8 overflow-hidden rounded-[30px] border border-[#A69AFF]/20 bg-[#191A3A]">
+      <div className="grid lg:grid-cols-[0.9fr_1.1fr]">
+        <div className="relative z-10 flex flex-col justify-center p-7 sm:p-10 lg:p-12 xl:p-14">
+          <div className="mb-7 inline-flex w-fit items-center gap-2 rounded-full border border-[#A99DFF]/25 bg-[#A99DFF]/10 px-3.5 py-2 text-[11px] font-semibold uppercase tracking-[0.15em] text-[#C6BBFF]">
+            <span className="h-1.5 w-1.5 rounded-full bg-[#BBAEFF]" />
+            {en ? 'SaaS case study' : 'SaaS studija projekta'}
+          </div>
+          <p className="mb-3 text-xs font-semibold uppercase tracking-[.17em] text-[#B2A9DE]">{en ? 'Product design & development' : 'Dizajn i razvoj proizvoda'}</p>
+          <h3 className="text-4xl font-semibold tracking-[-.055em] text-white sm:text-5xl xl:text-6xl">Easy<span className="text-[#B8AEFF]">Book.</span></h3>
+          <p className="mt-5 max-w-lg text-base leading-8 text-[#CDCEEB]">
+            {en
+              ? 'A booking platform that connects service selection, availability, customer scheduling and business management.'
+              : 'Platforma koja povezuje izbor usluge, slobodne termine, online zakazivanje i upravljanje rezervacijama.'}
+          </p>
+          <div className="mt-7 flex flex-wrap gap-2">{['React', 'TypeScript', 'Supabase'].map(tag => <span key={tag} className="rounded-full border border-[#A99DFF]/20 bg-black/10 px-3 py-1.5 text-xs text-[#D2D0F1]">{tag}</span>)}</div>
+          <a href="#case-study-easybook" className="mt-9 inline-flex w-fit items-center gap-3 rounded-full bg-[#B1A5FF] px-6 py-3.5 text-sm font-bold text-[#181333] transition-colors hover:bg-[#CBC2FF] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#CBC2FF]">
+            {en ? 'Explore case study' : 'Pogledaj studiju projekta'} <ArrowUpRight size={17} aria-hidden="true" />
+          </a>
+        </div>
+        <div className="min-h-[400px] overflow-hidden border-t border-white/10 lg:min-h-[550px] lg:border-l lg:border-t-0">
+          <EasyBookVisual locale={locale} compact />
+        </div>
+      </div>
+    </article>
+  );
+}
+
 export default function Portfolio() {
   const { language } = useLanguage();
   const locale = language === 'sr' ? 'sr' : 'en';
   const reduceMotion = useReducedMotion();
   const [filter, setFilter] = useState<Filter>('All');
   const showFeatured = filter === 'All' || filter === 'Mobile Apps';
-  const projects = studioProjects.filter((project) => project.id !== '18holes' && (filter === 'All' || project.category === filter));
+  const showEasyBook = filter === 'All' || filter === 'SaaS';
+  const projects = studioProjects.filter((project) => project.id !== '18holes' && project.id !== 'easybook' && (filter === 'All' || project.category === filter));
 
   return (
     <section id="portfolio" className="relative bg-[#0B1020] py-24 text-white md:py-32">
@@ -82,6 +115,7 @@ export default function Portfolio() {
           ))}
         </div>
         {showFeatured && <GolfFeaturedCard locale={locale} />}
+        {showEasyBook && <EasyBookFeaturedCard locale={locale} />}
         {projects.length > 0 && <div className="grid gap-6 md:grid-cols-2">
           {projects.map((project, index) => (
             <motion.article key={project.id} initial={reduceMotion ? false : {opacity:0,y:15}} whileInView={{opacity:1,y:0}} viewport={{once:true,amount:0.1}} transition={{duration:0.4,delay:Math.min(index,3)*0.06}} className="group overflow-hidden rounded-[26px] border border-white/10 bg-[#141B2D]">
