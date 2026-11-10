@@ -14,7 +14,6 @@ interface PricingModalProps {
 
 const PricingModal: React.FC<PricingModalProps> = ({ isOpen, onClose, selectedPlan }) => {
   const { language } = useLanguage();
-  const t = translations[language];
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({
     companyName: '',
