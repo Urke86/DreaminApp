@@ -2,7 +2,6 @@ import React from 'react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Services from './components/Services';
-import CoreProduct from './components/CoreProduct';
 import Portfolio from './components/Portfolio';
 import About from './components/About';
 import Contact from './components/Contact';
@@ -24,8 +23,8 @@ function MetaTags() {
         ? 'DreaminApp builds SaaS platforms, mobile applications and AI-powered digital products.'
         : 'DreaminApp razvija SaaS platforme, mobilne aplikacije i digitalne proizvode zasnovane na AI tehnologijama.',
       keywords: language === 'en'
-        ? 'web design, web development, online scheduling, appointment booking, e-commerce, branding, digital solutions'
-        : 'web dizajn, izrada sajtova, online zakazivanje, rezervacija termina, e-commerce, brending, digitalna rešenja'
+        ? 'SaaS development, mobile app development, AI automation, digital product studio'
+        : 'razvoj SaaS aplikacija, mobilne aplikacije, AI automatizacija, digitalni proizvodi'
     };
 
     document.title = metaTags.title;
@@ -87,12 +86,12 @@ function App() {
     <LanguageProvider>
       <SEOHelmet />
       <MetaTags />
-      <div className="relative overflow-hidden">
+      <div className="relative overflow-hidden bg-[#090E1B]">
+        <a href="#main-content" className="skip-link">Preskoči na sadržaj / Skip to content</a>
         <Navbar />
-        <main>
+        <main id="main-content">
           <Hero />
           <Services />
-          <CoreProduct />
           <Portfolio />
           <About />
           <Contact />
