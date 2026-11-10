@@ -1,10 +1,13 @@
+import type { ReactNode } from 'react';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import { Globe, ShoppingBag, Layout, PenTool, Server, Smartphone, Lightbulb, Target, Users } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import { translations } from '../translations';
 
-const ServiceCard = ({ service, index }: { service: any; index: number }) => {
+type Service = { icon: ReactNode; title: string; description: string };
+
+const ServiceCard = ({ service, index }: { service: Service; index: number }) => {
   const [ref, inView] = useInView({
     triggerOnce: true,
     threshold: 0.1,
