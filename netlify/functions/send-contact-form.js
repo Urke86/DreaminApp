@@ -27,7 +27,7 @@ exports.handler = async function (event) {
   const message = clean(input.message, 5000);
 
   if (!name || !subject || !message ||
-      !/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(email)) {
+      !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
     return json(400, { error: 'Invalid form fields' });
   }
 
@@ -51,8 +51,8 @@ exports.handler = async function (event) {
       from: `DreaminApp Contact <${process.env.ZOHO_USER}>`,
       to: process.env.ZOHO_USER,
       replyTo: email,
-      subject: `DreaminApp contact: ${subject.replace(/[\\r\\n]/g, ' ')}`,
-      text: `Name: ${name}\\nEmail: ${email}\\nSubject: ${subject}\\n\\n${message}`,
+      subject: `DreaminApp contact: ${subject.replace(/[\r\n]/g, ' ')}`,
+      text: `Name: ${name}\nEmail: ${email}\nSubject: ${subject}\n\n${message}`,
     });
     return json(200, { success: true });
   } catch (error) {
