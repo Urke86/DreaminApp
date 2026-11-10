@@ -103,8 +103,8 @@ export default function Portfolio() {
         <div className="mt-12 flex flex-wrap items-center justify-between gap-5 border-t border-white/10 pt-8">
           <p className="max-w-xl text-sm text-slate-400">
             {locale === 'en'
-              ? 'Project previews will be upgraded with approved product screenshots and case studies.'
-              : 'Kartice ćemo dopuniti odobrenim screenshotovima i detaljnim prikazima projekata.'}
+              ? 'More than interfaces — each project is built around a real use case.'
+              : 'Više od interfejsa — iza svakog projekta stoji stvarna potreba korisnika.'}
           </p>
           <a href="#contact" className="inline-flex items-center gap-2 font-semibold text-[#C3BAFF] hover:text-white">
             {locale === 'en' ? 'Discuss your project' : 'Razgovarajmo o projektu'} <ArrowUpRight size={17} aria-hidden="true" />
