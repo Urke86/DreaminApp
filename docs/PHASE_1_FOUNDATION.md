@@ -1,31 +1,28 @@
-# Phase 1 — DreaminApp foundation (development branch)
+# DreaminApp — Phase 1 foundation
 
-This branch is for a staged refresh of DreaminApp into a digital product studio. It does **not** change the existing production branch or DNS.
+Development branch: `chore/phase-1-foundation-2026` · Draft PR #1.
 
-## Changes
-- Removed the duplicate `public/index.html`; Vite must build the root `index.html`.
-- Replaced outdated canonical/Open Graph URLs and stale product/review/search structured data with a minimal Organization + WebSite graph.
-- Updated bilingual document title and descriptions to digital product studio positioning.
-- Simplified sitemap to one canonical URL (hash anchors aren't separate indexable pages).
-- Corrected and hardened the Netlify contact form: strict field validation, plain-text email, server-side SMTP environment verification, generic error responses, and reply-to header.
+## Current hosting strategy (updated November 2026)
 
-## Netlify Free configuration
-- Repository: `Urke86/DreaminApp`
-- Production branch: `main` (**do not change until explicitly approved**)
-- Build command: `npm run build`
-- Publish directory: `dist`
-- Node: 20 or 22 LTS (verify compatibility in CI)
-- Required environment values (configure in Netlify UI, never commit secrets): `ZOHO_USER`, `ZOHO_PASS`
-- The site continues to use Netlify Functions and existing `netlify.toml`.
+**The user no longer owns `dreaminapp.rs`.** Our permanent free hosting target is `https://dreaminapp.netlify.app/`; the provider subdomain is not an email domain. See [FREE_HOSTING_AND_EMAIL.md](./FREE_HOSTING_AND_EMAIL.md) for current configuration, Netlify Forms notifications and mailbox migration constraints.
 
-## Before release
-1. Run `npm ci && npm run build && npm run lint`.
-2. Check every deployed form: contact, newsletter and EasyBook pricing.
-3. Confirm Zoho email SMTP credentials and domain DNS records (MX, SPF, DKIM, DMARC).
-4. Replace placeholder portfolio entries and unverified testimonials with real, approved case studies.
-5. Review the existing EasyBook pricing in both language versions and remove misleading claims.
-6. Confirm that the deployed site is available at `www.dreaminapp.rs` and HTTPS redirects work.
-7. Test mobile navigation, translations, page performance, OG preview, sitemap and email delivery.
-8. Review preview deployment security/noindex before sharing; do not index placeholder work.
+This document supersedes previous assumptions about paid domain DNS and Zoho SMTP. No old-domain email addresses should be advertised as active.
 
-These edits do not prove the build passes or SMTP delivery works. Both require execution/deployment testing.
+## Technical foundation completed
+
+- Single Vite entry point, canonical Netlify metadata and sitemap.
+- Responsive bilingual product studio presentation, portfolio and detailed case studies.
+- `npm run build`, TypeScript and lint validation in GitHub Actions.
+- Existing Netlify project with `npm run build`, publish directory `dist`, Node 20 and Deploy Previews.
+- React contact form now submits to **Netlify Forms**; the old Zoho Functions were removed from this branch.
+
+## Release gates
+
+1. Verify `dreaminapp-contact` appears under Netlify Forms and send a real test submission.
+2. Configure notification inbox after user creates/selects a new free email address.
+3. Confirm new public email and add optional `VITE_CONTACT_EMAIL` to Netlify environment.
+4. Confirm approved screenshots and permission for any private-message testimonial.
+5. Inspect mobile / desktop, links, language toggle, accessibility, and SEO.
+6. Merge only after explicit approval; current `main` and production remain unchanged.
+
+A successful GitHub CI or Netlify deploy is not proof that the contact submission was received.
