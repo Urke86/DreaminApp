@@ -21,7 +21,7 @@ function MetaTags() {
     const metaTags = {
       title: language === 'en' 
         ? 'DreaminApp | Digital Product Studio'
-        : 'DreaminApp | Digitalni Studio',
+        : 'DreaminApp | Studio za digitalne proizvode',
       description: language === 'en'
         ? 'DreaminApp builds SaaS platforms, mobile applications and AI-powered digital products.'
         : 'DreaminApp razvija SaaS platforme, mobilne aplikacije i digitalne proizvode zasnovane na AI tehnologijama.',
@@ -52,14 +52,14 @@ function SEOHelmet() {
       {
         "@type": "Organization",
         name: "DreaminApp",
-        url: "https://www.dreaminapp.rs/",
-        logo: "https://www.dreaminapp.rs/Modern-Minimalist%20Logo%20for%20DreaminApp%20-%20Version%204%20(2).png",
+        url: "https://dreaminapp.netlify.app/",
+        logo: "https://dreaminapp.netlify.app/Modern-Minimalist%20Logo%20for%20DreaminApp%20-%20Version%204%20(2).png",
         description: "Digital product studio building SaaS platforms, mobile apps and AI-powered solutions."
       },
       {
         "@type": "WebSite",
         name: "DreaminApp",
-        url: "https://www.dreaminapp.rs/"
+        url: "https://dreaminapp.netlify.app/"
       }
     ]
   };
