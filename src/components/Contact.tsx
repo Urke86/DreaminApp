@@ -1,10 +1,8 @@
 import { useState, type FormEvent } from 'react';
 import { ArrowUpRight, CheckCircle2, Mail, Send } from 'lucide-react';
-
-const CONTACT_EMAIL = (import.meta.env.VITE_CONTACT_EMAIL || '').trim();
-const UPWORK_PROFILE_URL = 'https://www.upwork.com/freelancers/~01f0ffdf1f5267bc52';
 import { useLanguage } from '../context/LanguageContext';
 
+const CONTACT_EMAIL = 'dreaminapp.studio@gmail.com';
 type ContactValues = { name: string; email: string; subject: string; message: string };
 const emptyForm: ContactValues = { name: '', email: '', subject: '', message: '' };
 
@@ -32,7 +30,7 @@ export default function Contact() {
       setValues(emptyForm);
       setStatus('success');
     } catch {
-      setError(en ? 'Your message could not be sent. Please contact us through Upwork instead.' : 'Poruka nije poslata. Možeš nas kontaktirati putem Upworka.');
+      setError(en ? 'Your message could not be sent. Please email us directly.' : 'Poruka nije poslata. Možeš nas kontaktirati direktno putem emaila.');
       setStatus('error');
     }
   }
@@ -53,8 +51,8 @@ export default function Contact() {
           <div className="mt-12 flex items-start gap-4">
             <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-white/10 bg-white/5"><Mail size={20} className="text-[#C3B8FF]" aria-hidden="true" /></div>
             <div>
-              <p className="text-xs font-semibold uppercase tracking-wider text-[#9CABBE]">{CONTACT_EMAIL ? 'Email' : (en ? 'Prefer a direct conversation?' : 'Želiš direktan kontakt?')}</p>
-              {CONTACT_EMAIL ? <a href={`mailto:${CONTACT_EMAIL}`} className="mt-1 inline-flex items-center gap-1 break-all text-base font-medium text-white transition-colors hover:text-[#C2B8FF]">{CONTACT_EMAIL} <ArrowUpRight size={16} aria-hidden="true" /></a> : <a href={UPWORK_PROFILE_URL} target="_blank" rel="noopener noreferrer" className="mt-1 inline-flex items-center gap-1 text-base font-medium text-white transition-colors hover:text-[#C2B8FF]">Upwork <ArrowUpRight size={16} aria-hidden="true" /></a>}
+              <p className="text-xs font-semibold uppercase tracking-wider text-[#9CABBE]">Email</p>
+              <a href={`mailto:${CONTACT_EMAIL}`} className="mt-1 inline-flex items-center gap-1 break-all text-base font-medium text-white transition-colors hover:text-[#C2B8FF]">{CONTACT_EMAIL} <ArrowUpRight size={16} aria-hidden="true" /></a>
             </div>
           </div>
         </div>
