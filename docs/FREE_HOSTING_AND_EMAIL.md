@@ -17,6 +17,7 @@ GitHub deployment: `Urke86/DreaminApp` → Netlify site `dreaminapp`. Production
 - Removed obsolete SMTP-backed Netlify Functions that were left over from an earlier Zoho setup. Do not restore them for the old domain.
 
 ## Required Netlify UI actions
+0. Open **dreaminapp → Domain management**. If `dreaminapp.rs` or `www.dreaminapp.rs` is still attached as a custom/primary domain, detach it and confirm **dreaminapp.netlify.app** works as the public address. Do not modify DNS at the old registrar (the domain is no longer owned).
 1. In Netlify open **dreaminapp → Forms** and ensure **Form detection** is enabled.
 2. Deploy the preview and verify that `dreaminapp-contact` was detected (some accounts require explicit activation before next deploy).
 3. Submit a single realistic test message via Preview and confirm it appears under **Forms → Verified** (or inspect the Spam list). Do not treat HTTP 200 alone as proof of successful submission.
