@@ -1,6 +1,9 @@
 import { ArrowUpRight, Github, Linkedin } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 
+const CONTACT_EMAIL = (import.meta.env.VITE_CONTACT_EMAIL || '').trim();
+const UPWORK_PROFILE_URL = 'https://www.upwork.com/freelancers/~01f0ffdf1f5267bc52';
+
 export default function Footer() {
   const { language } = useLanguage();
   const en = language === 'en';
@@ -19,7 +22,7 @@ export default function Footer() {
           <div className="max-w-sm">
             <a href="#hero" className="inline-block text-[28px] font-semibold tracking-[-.055em]">dreamin<span className="text-[#B4AAFF]">app</span><span className="text-[#8CE1CA]">.</span></a>
             <p className="mt-5 max-w-xs text-sm leading-7 text-[#9DAFC7]">{en ? 'Independent digital product studio creating purposeful SaaS, mobile and AI experiences.' : 'Nezavisni digitalni studio za promišljene SaaS, mobilne i AI proizvode.'}</p>
-            <a href="mailto:office@dreaminapp.rs" className="mt-6 inline-flex items-center gap-2 text-sm font-medium text-[#D3CFFF] transition-colors hover:text-white">office@dreaminapp.rs <ArrowUpRight size={16} aria-hidden="true" /></a>
+            {CONTACT_EMAIL ? <a href={`mailto:${CONTACT_EMAIL}`} className="mt-6 inline-flex items-center gap-2 break-all text-sm font-medium text-[#D3CFFF] transition-colors hover:text-white">{CONTACT_EMAIL} <ArrowUpRight size={16} aria-hidden="true" /></a> : <a href={UPWORK_PROFILE_URL} target="_blank" rel="noopener noreferrer" className="mt-6 inline-flex items-center gap-2 text-sm font-medium text-[#D3CFFF] transition-colors hover:text-white">Upwork <ArrowUpRight size={16} aria-hidden="true" /></a>}
           </div>
           <div>
             <p className="text-xs font-semibold uppercase tracking-[.2em] text-[#8799B2]">{en ? 'Explore' : 'Istraži'}</p>
