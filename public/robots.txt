@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://dreaminapp.netlify.app/sitemap.xml
