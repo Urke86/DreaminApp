@@ -1,109 +1,50 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { useInView } from 'react-intersection-observer';
-import { Target, Code, Users, Award } from 'lucide-react';
+import { ArrowUpRight, Check, Compass, Layers3, Rocket } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
-import { translations } from '../translations';
 
-const About = () => {
+export default function About() {
   const { language } = useLanguage();
-  const t = translations[language].about;
+  const en = language === 'en';
 
-  const [ref, inView] = useInView({
-    triggerOnce: true,
-    threshold: 0.1,
-  });
-
-  const [statsRef, statsInView] = useInView({
-    triggerOnce: true,
-    threshold: 0.1,
-  });
-
-  const stats = t.stats.map((stat, index) => {
-    const icons = [
-      <Code className="w-6 h-6 text-primary-600" />,
-      <Users className="w-6 h-6 text-primary-600" />,
-      <Award className="w-6 h-6 text-primary-600" />,
-      <Target className="w-6 h-6 text-primary-600" />
-    ];
-    return {
-      ...stat,
-      icon: icons[index]
-    };
-  });
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
-  };
+  const steps = [
+    { number: '01', icon: Compass, en: 'Discover', sr: 'Razumevanje', detailEn: 'Find the real problem.', detailSr: 'Razumemo pravi problem.' },
+    { number: '02', icon: Layers3, en: 'Design', sr: 'Dizajn', detailEn: 'Make every interaction count.', detailSr: 'Svaka interakcija ima smisao.' },
+    { number: '03', icon: Rocket, en: 'Build & evolve', sr: 'Razvoj i rast', detailEn: 'Ship, learn and improve.', detailSr: 'Isprobavamo, učimo i unapređujemo.' },
+  ];
 
   return (
-    <section id="about" className="section">
-      <div className="container">
-        <div className="grid md:grid-cols-2 gap-12 items-center">
-          <motion.div
-            ref={ref}
-            initial={{ opacity: 0, x: -30 }}
-            animate={inView ? { opacity: 1, x: 0 } : { opacity: 0, x: -30 }}
-            transition={{ duration: 0.6 }}
-            className="relative"
-          >
-            <div className="relative z-10 overflow-hidden rounded-2xl shadow-xl">
-              <img 
-                src="https://images.pexels.com/photos/3182812/pexels-photo-3182812.jpeg" 
-                alt="Our team" 
-                className="w-full h-auto"
-              />
+    <section id="about" className="relative overflow-hidden bg-[#0A1120] py-24 text-white md:py-32">
+      <div className="pointer-events-none absolute right-0 top-1/3 h-96 w-96 rounded-full bg-[#6D5DDB]/10 blur-[120px]" aria-hidden="true" />
+      <div className="container relative">
+        <div className="grid items-start gap-14 lg:grid-cols-[0.95fr_1.05fr] lg:gap-24">
+          <div>
+            <p className="studio-eyebrow">{en ? 'Inside the studio' : 'O studiju'}</p>
+            <h2 className="studio-section-title mt-5">{en ? <>Small by design. <span className="studio-gradient-text">Big on detail.</span></> : <>Pažnja na detalje. <span className="studio-gradient-text">Velike ideje.</span></>}</h2>
+            <p className="mt-7 max-w-lg text-base leading-8 text-[#AAB8CF]">
+              {en
+                ? 'DreaminApp is an independent digital product studio combining product management, deliberate design and modern development. No unnecessary layers — just a thoughtful approach to building useful software.'
+                : 'DreaminApp je nezavisni studio koji spaja produkt menadžment, promišljen dizajn i savremeni razvoj softvera. Bez nepotrebne komplikacije — sa fokusom na stvarnu vrednost proizvoda.'}
+            </p>
+            <a className="mt-8 inline-flex items-center gap-2 border-b border-[#ADA3FF]/50 pb-2 text-sm font-semibold text-[#C7C0FF] transition-colors hover:border-white hover:text-white" href="#contact">
+              {en ? 'Let’s build something meaningful' : 'Hajde da napravimo nešto vredno'} <ArrowUpRight size={16} aria-hidden="true" />
+            </a>
+          </div>
+          <div className="overflow-hidden rounded-[30px] border border-white/10 bg-[#141E30]/80">
+            <div className="border-b border-white/10 px-7 py-6 sm:px-9">
+              <div className="flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[.18em] text-[#ACA6F5]"><Check size={15} aria-hidden="true" /> {en ? 'How we think' : 'Naš proces'}</div>
             </div>
-            <div className="absolute -bottom-6 -right-6 w-2/3 h-2/3 bg-primary-100 rounded-2xl -z-10" />
-          </motion.div>
-          
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-          >
-            <h2 className="text-3xl md:text-4xl font-bold mb-6">{t.title}</h2>
-            {t.description.map((paragraph, index) => (
-              <p key={index} className="text-gray-600 mb-6">{paragraph}</p>
-            ))}
-          </motion.div>
+            {steps.map((step, index) => {
+              const Icon = step.icon;
+              return (
+                <div key={step.number} className={`group grid grid-cols-[48px_1fr_auto] items-center gap-4 px-6 py-7 sm:px-9 ${index !== steps.length - 1 ? 'border-b border-white/10' : ''}`}>
+                  <span className="text-xs font-semibold tracking-widest text-[#848EAA]">{step.number}</span>
+                  <div><h3 className="text-xl font-semibold tracking-tight text-white">{en ? step.en : step.sr}</h3><p className="mt-1 text-sm text-[#92A1B9]">{en ? step.detailEn : step.detailSr}</p></div>
+                  <div className="flex h-11 w-11 items-center justify-center rounded-xl border border-white/10 text-[#B2A7FF] transition-colors group-hover:bg-[#B2A7FF]/10"><Icon size={20} strokeWidth={1.6} aria-hidden="true" /></div>
+                </div>
+              );
+            })}
+          </div>
         </div>
-
-        <motion.div
-          ref={statsRef}
-          variants={containerVariants}
-          initial="hidden"
-          animate={statsInView ? "visible" : "hidden"}
-          className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-20"
-        >
-          {stats.map((stat, index) => (
-            <motion.div 
-              key={index} 
-              variants={itemVariants}
-              className="card text-center"
-            >
-              <div className="flex justify-center mb-4">
-                {stat.icon}
-              </div>
-              <div className="text-3xl font-bold text-primary-600 mb-1">{stat.value}</div>
-              <div className="text-gray-600">{stat.label}</div>
-            </motion.div>
-          ))}
-        </motion.div>
       </div>
     </section>
   );
-};
-
-export default About;
+}

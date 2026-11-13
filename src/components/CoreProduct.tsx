@@ -27,8 +27,6 @@ const PricingCard = ({
   });
 
   const { language } = useLanguage();
-  const t = translations[language].coreProduct;
-
   return (
     <motion.div
       ref={ref}

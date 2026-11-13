@@ -1,9 +1,10 @@
-[functions]
-  directory = "netlify/functions"
-  
+[build]
+  command = "npm run build"
+  publish = "dist"
+
 [[redirects]]
   from = "/paketi"
-  to = "/#paketi"
+  to = "/#portfolio"
   status = 301
 
 [[redirects]]
